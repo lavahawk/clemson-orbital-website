@@ -20,7 +20,7 @@ const PAGES = [
 
 // The header's logo lockup is the one from the current build: Archivo wordmark, IBM Plex Mono sub-label.
 // Bumped whenever motif.css or motif.js changes, so browsers drop their cached copy.
-const VERSION = "4";
+const VERSION = "5";
 
 const BRAND_FONTS =`<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,7 +44,7 @@ ${links}
   </header>`;
 }
 
-const CREDITS = `<p class="credits">Team photos are Clemson Orbital's own. Footage of small satellites leaving the space station: <a href="https://commons.wikimedia.org/wiki/File:BurstCube_Deploys_from_International_Space_Station_(SVS14608_-_BurstCube_Deployment_2_720p).webm">BurstCube deployment</a> by NASA's Scientific Visualization Studio, public domain, via Wikimedia Commons. It shows the wider world of small satellites, not Clemson Orbital's own hardware.</p>`;
+const CREDITS = `<p class="credits">Team, lab and X-PLORE photos are Clemson Orbital's own. Pictures of the wider world, captioned where they appear: footage of <a href="https://commons.wikimedia.org/wiki/File:BurstCube_Deploys_from_International_Space_Station_(SVS14608_-_BurstCube_Deployment_2_720p).webm">BurstCube leaving the ISS</a> by NASA's Scientific Visualization Studio; <a href="https://commons.wikimedia.org/wiki/File:GASPACS_moments_after_deployment_from_the_International_Space_Station.jpg">GASPACS after deployment</a> by NASA astronaut Mark T. Vande Hei; <a href="https://commons.wikimedia.org/wiki/File:NanoRacks_CubeSat_deployer_deploying_CXBN-2_and_IceCube.jpg">CubeSats leaving a NanoRacks deployer</a>, <a href="https://commons.wikimedia.org/wiki/File:ISS-47_Earth%E2%80%99s_limb_during_a_starry_night_pass_above_the_Indian_Ocean.jpg">Earth's limb from ISS-47</a>, <a href="https://commons.wikimedia.org/wiki/File:Rocket_Launches_from_Wallops_Flight_Facility_(8969248575).jpg">a launch from Wallops</a> and <a href="https://www.rawpixel.com/image/441055/free-photo-image-manufacturing-factory-solar-panel">the Juno solar array test</a> by NASA, all public domain; <a href="https://commons.wikimedia.org/wiki/File:Sunrise_on_Hartwell.png">Sunrise on Hartwell</a> by Stelath, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. None of them show Clemson Orbital hardware.</p>`;
 
 const footer = `<footer class="foot">
     <div class="foot-mark"><img src="${UP}assets/logo.svg" alt="" width="520" height="580"><span>clemson<br>orbital</span></div>
@@ -104,7 +104,7 @@ const folder = (tab, cat, media, text, link) => `
       <article class="folder">
         <div class="folder-strip"><span class="tab rise">${tab}</span><span class="folder-cat">${cat}</span></div>
         <div class="folder-body">
-          ${media.src ? `<div class="folder-media rise"><img src="${UP}${media.src}" alt="${media.alt}" width="1200" height="1600" loading="lazy" style="object-position:${media.at || "50% 50%"}"></div>` : `<div class="folder-media ${media} rise" aria-hidden="true">${media === "motif-units" ? "<i></i><i></i><i class=\"on\"></i>" : media === "motif-place" || media === "motif-rest" ? "<i></i>" : ""}</div>`}
+          ${media.src ? `<figure class="folder-media rise"><img src="${UP}${media.src}" alt="${media.alt}" width="${media.w || 1200}" height="${media.h || 1600}" loading="lazy" style="object-position:${media.at || "50% 50%"}">${media.cap ? `<figcaption>${media.cap}</figcaption>` : ""}</figure>` : `<div class="folder-media ${media} rise" aria-hidden="true">${media === "motif-units" ? "<i></i><i></i><i class=\"on\"></i>" : media === "motif-place" || media === "motif-rest" ? "<i></i>" : ""}</div>`}
           <div class="folder-text rise" style="--d:90ms">
             <p>${text}</p>${link ? `
             <a class="more" href="${link[1]}">${link[0]}</a>` : ""}
@@ -142,6 +142,15 @@ const closeTile = (h2, p, button) => `
 const MEDIA = ["motif-units", "motif-place", "motif-ring", "motif-rest"];
 // The team's own ground station work, photographed in the lab.
 const GS_ANTENNA = { src: "assets/photos/groundstation-antenna.jpg", at: "50% 55%", alt: "A crossed Yagi antenna for satellite passes laid out on a lab workbench, its aluminium elements and coax cables in the foreground." };
+const TEAM_TALK = { src: "assets/photos/team-presenting.jpg", w: 1280, h: 960, at: "50% 40%", alt: "Five Clemson Orbital members presenting the team's current projects to a lecture hall." };
+const XPLORE_PHOTO = { src: "assets/photos/xplore-greenville-tabling.jpg", w: 1800, h: 1350, at: "50% 45%", alt: "Clemson Orbital members talking with a family at the X-PLORE table at a street event in Greenville." };
+// Found pictures of the wider world (credited in the footer). Each carries a caption so it is never read as our own hardware.
+const HARTWELL = { src: "assets/sunrise-on-hartwell.jpg", w: 1920, h: 1273, at: "50% 60%", alt: "Sunrise over Lake Hartwell, the lake beside Clemson's campus.", cap: "Lake Hartwell, Clemson. Photo: Stelath, CC BY 4.0" };
+const CLEANROOM = { src: "assets/in-a-clean-room-environment-at-astrotech.webp", w: 1200, h: 800, alt: "Technicians in clean-room suits testing a spacecraft's solar array panels.", cap: "Juno solar array test, Astrotech. NASA photo" };
+const WALLOPS = { src: "assets/rocket-launches-from-wallops-flight-facility-8969248575.jpg", w: 1600, h: 2400, at: "50% 35%", alt: "A sounding rocket lifting off from NASA's Wallops Flight Facility on the Virginia coast.", cap: "Launch from Wallops, Virginia. NASA photo" };
+const EARTH_LIMB = { src: "assets/iss-47-earth-s-limb-during-a.jpg", w: 1920, h: 1278, alt: "Earth's glowing edge and the stars, seen from the International Space Station at night.", cap: "Earth's limb from the ISS. NASA photo" };
+const DEPLOYER = { src: "assets/nanoracks-cubesat-deployer-deploying-cxbn-2-and.jpg", w: 1024, h: 682, alt: "Two CubeSats leaving a deployer on the International Space Station, with Earth below.", cap: "CubeSats leaving the ISS. NASA photo" };
+const CUBESAT_ORBIT = { src: "assets/gaspacs-moments-after-deployment-from-the-international.jpg", w: 1920, h: 1280, alt: "A small CubeSat drifting away from the International Space Station above Earth.", cap: "GASPACS, Utah State's CubeSat. NASA photo" };
 const GS_BENCH = { src: "assets/photos/groundstation-bench.jpg", at: "55% 50%", alt: "A member taking notes beside a ground station test setup: an SDRplay RSPduo receiver, a Raspberry Pi with a small screen, and an antenna manual." };
 
 // X-PLORE, the semester-long program for middle and high school students (Advocacy page).
@@ -234,9 +243,9 @@ write("about.html", page({
       "We haven't flown anything yet. Our first spacecraft are still in design, so this is when the habits get set: open reviews, honest testing, and documents the next class can pick up.",
     ]),
     folders("how we work", [
-      folder("build it to fly", "testing", MEDIA[0], "A design isn't done until it survives vibration, thermal cycling, and the people who have to operate it. We plan to test early and write down what broke."),
-      folder("write it down", "reviews", MEDIA[2], "Reviews are open, documents stay current, and every lesson gets handed to the next team. If only one person understands a subsystem, it isn't finished."),
-      folder("keep the south in the room", "the region", MEDIA[1], "Decisions about aerospace get made in a handful of places. We want students and companies from this region in those conversations, and we want to show the work can happen here."),
+      folder("build it to fly", "testing", GS_BENCH, "A design isn't done until it survives vibration, thermal cycling, and the people who have to operate it. We plan to test early and write down what broke."),
+      folder("write it down", "reviews", TEAM_TALK, "Reviews are open, documents stay current, and every lesson gets handed to the next team. If only one person understands a subsystem, it isn't finished."),
+      folder("keep the south in the room", "the region", HARTWELL, "Decisions about aerospace get made in a handful of places. We want students and companies from this region in those conversations, and we want to show the work can happen here."),
     ]),
     split("you don't need orbital mechanics yet", [
       "Orbital is open to every major. Engineers design the hardware, but a space program also needs people who write, design, manage budgets, run events, and talk to the public. Plenty of members joined without any space experience and learned it next to someone a semester ahead of them.",
@@ -255,8 +264,8 @@ write("missions.html", page({
   body: [
     stages,
     folders("where we're headed", [
-      folder("clemson cubesat", "in design", MEDIA[0], "Research satellites designed and built by Clemson students. The first one is still on the drawing board; we'll post details as it firms up."),
-      folder("larger platform", "future · concept only", MEDIA[3], "A bigger spacecraft that could carry several experiments and run for longer. For now it's an idea and a list of requirements, not a launch date."),
+      folder("clemson cubesat", "in design", CLEANROOM, "Research satellites designed and built by Clemson students. The first one is still on the drawing board; we'll post details as it firms up."),
+      folder("larger platform", "future · concept only", WALLOPS, "A bigger spacecraft that could carry several experiments and run for longer. For now it's an idea and a list of requirements, not a launch date."),
       folder("ground stations", "in progress · on campus", GS_BENCH, "We're putting together a receiving station in the lab now: a software radio, a Raspberry Pi, and antennas for satellite passes. A station on campus first, then partner sites around the state so we can hear our spacecraft on more passes."),
     ]),
     closeTile("want to work on a mission?", "Most members join without any space experience. Pick a subsystem and learn it next to someone a semester ahead of you.", ["join the team", "contact.html#message"]),
@@ -271,12 +280,12 @@ write("research.html", page({
   body: [
     split("the question comes first", [
       "Every Clemson CubeSat starts with a research question. Students write it down, work out what the spacecraft has to measure, and then do the engineering around it: mechanical fit, power budget, data handling, and the safety reviews launch providers require.",
-      "Faculty advisors help keep the science honest, and members see an experiment through from the first question to the final design review.",
+      "We invite faculty to review the science, and members see an experiment through from the first question to the final design review.",
     ]),
     folders("where we focus", [
-      folder("space environment", "measured in place", MEDIA[3], "Radiation, thermal swings, and drag, measured in place to check the models engineers rely on."),
-      folder("small satellite systems", "on very little hardware", MEDIA[0], "Attitude control, power, and software that has to run on very little hardware."),
-      folder("sensing and imaging", "earth and near space", MEDIA[1], "Instruments that look at Earth or near space, with an eye on data regional partners can use."),
+      folder("space environment", "measured in place", EARTH_LIMB, "Radiation, thermal swings, and drag, measured in place to check the models engineers rely on."),
+      folder("small satellite systems", "on very little hardware", DEPLOYER, "Attitude control, power, and software that has to run on very little hardware."),
+      folder("sensing and imaging", "earth and near space", CUBESAT_ORBIT, "Instruments that look at Earth or near space, with an eye on data regional partners can use."),
       folder("communications", "a few minutes overhead", GS_ANTENNA, "Link budgets and ground stations for a spacecraft that's only overhead for a few minutes at a time. Members are already building and testing the antennas in our lab."),
     ]),
     split("work on it with us", [], dots([
@@ -296,13 +305,13 @@ write("advocacy.html", page({
   body: [
     split("why this region, and why now", [
       "The space industry is spreading beyond its old hubs. Companies want engineers who can work on a real system from day one, and students need to see that those jobs can exist close to home.",
-      "So our advocacy is practical. Students meet local employers, local employers sit in on our reviews, and our results go to the people deciding on research funding and workforce programs.",
+      "So we want our advocacy to be practical: students meeting local employers, employers sitting in on our reviews, and our results reaching the people who decide on research funding and workforce programs.",
     ]),
     folders("who we work with", [
-      folder("schools", "visits and demos", MEDIA[0], "Visits and hands-on demos for kids who've never seen a satellite up close."),
-      folder("communities", "talks and open events", MEDIA[1], "Public talks and open events in Clemson and around the state."),
-      folder("industry", "sponsors and mentors", MEDIA[2], "Sponsorship, mentorship, and technical review from regional companies, plus an early look at the students they'll want to hire."),
-      folder("policy", "state and local leaders", MEDIA[3], "Conversations with state and local leaders about research funding, workforce programs, and what space work needs here."),
+      folder("schools", "visits and demos", TEAM_TALK, "Visits and hands-on demos for kids who've never seen a satellite up close."),
+      folder("communities", "talks and open events", HARTWELL, "Public talks and open events in Clemson and around the state."),
+      folder("industry", "sponsors and mentors", CLEANROOM, "Sponsorship, mentorship, and technical review from regional companies, plus an early look at the students they'll want to hire."),
+      folder("policy", "state and local leaders", WALLOPS, "Conversations with state and local leaders about research funding, workforce programs, and what space work needs here."),
     ]),
     xplore,
     split("help us make the case", [], dots([
@@ -328,9 +337,9 @@ write("team.html", page({
       </div>
     </section>
 ${folders("our programs", [
-      folder("clemson cubesat", "design and build", MEDIA[0], "Students apply themselves to the design and build of research satellites, from the first requirements review onward.", ["how a mission works", "missions.html"]),
+      folder("clemson cubesat", "design and build", TEAM_TALK, "Students apply themselves to the design and build of research satellites, from the first requirements review onward.", ["how a mission works", "missions.html"]),
       folder("ground station", "in the lab now", GS_BENCH, "A receiving station on campus: software radio, antennas, and the code to track a satellite across the sky.", ["our research", "research.html"]),
-      folder("x-plore", "outreach", { src: "assets/photos/xplore-greenville-tabling.jpg", at: "50% 45%", alt: "Clemson Orbital members talking with a family at the X-PLORE table at a street event in Greenville." }, "Middle and high school students spend a semester working as a spacecraft engineering team, with our members as reviewers.", ["about x-plore", "advocacy.html#xplore"]),
+      folder("x-plore", "outreach", XPLORE_PHOTO, "Middle and high school students spend a semester working as a spacecraft engineering team, with our members as reviewers.", ["about x-plore", "advocacy.html#xplore"]),
     ])}
 ${split("every discipline has a seat", [
       "You don't need to be an aerospace engineer, or any kind of engineer. Members work on hardware and software, but also on writing, design, budgets, events, and outreach.",
@@ -365,6 +374,8 @@ home = home
   // X-PLORE gets a line in the advocacy folder, and a topic in the contact form.
   .replace("workforce programs in South Carolina.</p>\n            <a class=\"more\" href=\"advocacy.html\">our outreach</a>",
     "workforce programs in South Carolina. Through X-PLORE, middle and high school students spend a semester working as a spacecraft engineering team.</p>\n            <a class=\"more\" href=\"advocacy.html#xplore\">about X-PLORE</a>")
+  .replace('<div class="folder-media motif-units rise" aria-hidden="true"><i></i><i></i><i class="on"></i></div>', '<figure class="folder-media rise"><img src="assets/photos/groundstation-bench.jpg" alt="' + GS_BENCH.alt + '" width="1200" height="1600" loading="lazy" style="object-position:55% 50%"></figure>')
+  .replace('<div class="folder-media motif-place rise" aria-hidden="true"><i></i></div>', '<figure class="folder-media rise"><img src="assets/photos/xplore-greenville-tabling.jpg" alt="' + XPLORE_PHOTO.alt + '" width="1800" height="1350" loading="lazy" style="object-position:50% 45%"></figure>')
   .replace("            <option>Outreach or a school visit</option>\n            <option>Media", "            <option>Outreach or a school visit</option>\n            <option>The X-PLORE program</option>\n            <option>Media");
 fs.writeFileSync(homePath, home);
 

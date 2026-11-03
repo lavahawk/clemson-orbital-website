@@ -399,3 +399,7 @@ img, video, svg { display: block; max-width: 100%; }
   .page-hero { flex-direction: column; align-items: stretch; }
   .page-hero::after { order: 2; position: relative; right: auto; bottom: auto; top: auto; left: auto; transform: none; flex: none; width: 110vw; margin: 40px 0 -70vw 12vw; opacity: 1; }
 }
+
+/* Photo slots in the folders: a figure, with a small caption on pictures that are not the team's own. */
+figure.folder-media { margin: 0; position: relative; }
+.folder-media figcaption { position: absolute; right: 12px; bottom: 12px; max-width: calc(100% - 24px); padding: 4px 10px; border-radius: 999px; background: rgb(10 11 15 / 0.72); color: var(--ink); font-size: 13px; line-height: 1.4; }
