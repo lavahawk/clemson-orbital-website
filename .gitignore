@@ -1,7 +1,6 @@
 .superdesign/tmp/
 .superdesign-extract-*.log
 .taste-skill/
-.claude/
 
 # Full-size originals stay local; the site uses the web copies in assets/photos and assets/headshots/web.
 assets/headshots/*.png
