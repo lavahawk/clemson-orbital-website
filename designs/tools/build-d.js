@@ -20,7 +20,7 @@ const PAGES = [
 
 // The header's logo lockup is the one from the current build: Archivo wordmark, IBM Plex Mono sub-label.
 // Bumped whenever motif.css or motif.js changes, so browsers drop their cached copy.
-const VERSION = "15";
+const VERSION = "16";
 
 const BRAND_FONTS =`<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

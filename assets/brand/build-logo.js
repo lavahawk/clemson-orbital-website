@@ -114,9 +114,12 @@ const PIECES = [
 function stage(n) {
   const ink = "#F1F1EF";
   const shown = PIECES.slice(0, Math.min(n, 4));
-  const isNew = (i) => n <= 4 && i === n - 1;
-  const cuts = shown.flatMap((p, i) => p.cut.map((d) => `<path d="${d}" fill="#000"${isNew(i) ? ' class="cut-in"' : ""}/>`)).join("");
-  const lines = shown.map((p, i) => p.lines ? `<g${isNew(i) ? ' class="draw-in"' : ""}>${p.lines.map((pts) => `<path d="${open(pts)}" pathLength="1"/>`).join("")}</g>` : "").join("");
+  // Stage 4 (Team) replays the whole build: all three swoops draw in, one after another, as the ship arrives.
+  const isNew = (i) => (n === 4 && i < 4) || (n < 4 && i === n - 1);
+  const delay = (i) => (n === 4 ? ` style="animation-delay:${(0.4 + i * 0.35).toFixed(2)}s"` : "");
+  const cutDelay = (i) => (n === 4 ? ` style="animation-delay:${(0.9 + i * 0.35).toFixed(2)}s"` : "");
+  const cuts = shown.flatMap((p, i) => p.cut.map((d) => `<path d="${d}" fill="#000"${isNew(i) ? ` class="cut-in"${cutDelay(i)}` : ""}/>`)).join("");
+  const lines = shown.map((p, i) => p.lines ? `<g${isNew(i) ? ' class="draw-in"' : ""}>${p.lines.map((pts) => `<path d="${open(pts)}" pathLength="1"${isNew(i) ? delay(i) : ""}/>`).join("")}</g>` : "").join("");
   const hasShip = n >= 4;
   const finished = n >= 5;
   const fill = finished ? "url(#st-globe)" : ORANGE;
