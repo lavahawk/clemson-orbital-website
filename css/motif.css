@@ -311,7 +311,8 @@ img, video, svg { display: block; max-width: 100%; }
 
 /* Phone menu */
 .menu-toggle { display: none; background: none; border: 0; color: var(--ink); font: 500 var(--step-body) var(--font); text-transform: lowercase; cursor: pointer; padding: 8px 0; }
-.top nav a[aria-current="page"]::after { transform: translateX(-50%) scale(1); opacity: 1; }
+/* Current page: bold text. The dot is kept for hover so it never looks stuck on. */
+.top nav a[aria-current="page"] { font-weight: 700; }
 
 @media (max-width: 900px) {
   .top nav { display: none; position: fixed; inset: 0; z-index: 20; flex-direction: column; justify-content: center; gap: 8px; padding: 0 var(--margin); background: var(--ground); }
