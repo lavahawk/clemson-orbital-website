@@ -123,11 +123,12 @@ function stage(n) {
   const shade = GLOBE_SHADE.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VIEWBOX}" aria-hidden="true">
   <style>
-    .draw-in path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s cubic-bezier(.16,1,.3,1) .5s forwards; }
+    .draw-in path { stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; animation: draw 1.6s cubic-bezier(.16,1,.3,1) .5s forwards; }
     .cut-in { opacity: 0; animation: show .9s ease-out 1.1s forwards; }
     .ship-in { opacity: 0; transform: translate(-40px, 30px) rotate(-8deg); transform-origin: 440px 80px; animation: fly 1.4s cubic-bezier(.16,1,.3,1) .5s forwards; }
     .done-in { opacity: 0; animation: show 1.2s ease-out .4s forwards; }
-    @keyframes draw { to { stroke-dashoffset: 0; } }
+    /* Hidden until the stroke starts: a zero-length dash with round caps would otherwise show as a dot at each end. */
+    @keyframes draw { 0% { opacity: 0; } 2% { opacity: 1; } 100% { opacity: 1; stroke-dashoffset: 0; } }
     @keyframes show { to { opacity: 1; } }
     @keyframes fly { to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .draw-in path, .cut-in, .ship-in, .done-in { animation: none; stroke-dashoffset: 0; opacity: 1; transform: none; } }

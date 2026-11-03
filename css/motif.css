@@ -459,12 +459,12 @@ figure.folder-media { margin: 0; position: relative; }
 /* Inner-page hero: the logo assembles one piece per page in nav order (about = bare sphere ... contact = finished mark).
    The box is the logo's viewBox (520 x 580); --d is the sphere's diameter, 460 of those units. */
 .page-hero::after { border-radius: 0; aspect-ratio: 520 / 580; background: center / contain no-repeat; }
-.page-hero.stage-0::after { background-image: url(../assets/brand/stages/stage-0.svg); }
-.page-hero.stage-1::after { background-image: url(../assets/brand/stages/stage-1.svg); }
-.page-hero.stage-2::after { background-image: url(../assets/brand/stages/stage-2.svg); }
-.page-hero.stage-3::after { background-image: url(../assets/brand/stages/stage-3.svg); }
-.page-hero.stage-4::after { background-image: url(../assets/brand/stages/stage-4.svg); }
-.page-hero.stage-5::after { background-image: url(../assets/brand/stages/stage-5.svg); }
+.page-hero.stage-0::after { background-image: url(../assets/brand/stages/stage-0.svg?v=2); }
+.page-hero.stage-1::after { background-image: url(../assets/brand/stages/stage-1.svg?v=2); }
+.page-hero.stage-2::after { background-image: url(../assets/brand/stages/stage-2.svg?v=2); }
+.page-hero.stage-3::after { background-image: url(../assets/brand/stages/stage-3.svg?v=2); }
+.page-hero.stage-4::after { background-image: url(../assets/brand/stages/stage-4.svg?v=2); }
+.page-hero.stage-5::after { background-image: url(../assets/brand/stages/stage-5.svg?v=2); }
 @keyframes sphere-in { from { opacity: 0; transform: translateX(6%) scale(0.94); } to { opacity: 1; transform: none; } }
 @media (min-width: 901px) {
   .page-hero { min-height: min(100svh, 1000px); }
