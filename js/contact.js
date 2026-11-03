@@ -105,7 +105,9 @@
         form.reset();
         setStatus("Thanks, your message is on its way to the team.", "ok");
       })
-      .catch(function () {
+      .catch(function (error) {
+        // FormSubmit's reason (e.g. "This form needs Activation") shows in the browser console for troubleshooting.
+        if (window.console) console.warn("Contact form: not sent from the site.", error && error.message);
         openMailClient(values);
         setStatus("We couldn't send it from the site, so we opened your email app instead. If nothing opens, write to " + CONFIG.recipient + ".", "error");
       })
