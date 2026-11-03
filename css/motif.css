@@ -451,3 +451,6 @@ figure.folder-media { margin: 0; position: relative; }
   .leader:hover .leader-links, .leader:focus-within .leader-links { opacity: 1; translate: 0 0; }
   .leader-links a:hover { background: var(--accent); color: var(--accent-ink); scale: 1.05; }
 }
+
+/* Nav hover dot over the orange sphere: white, so it stays visible (set by motif.js). */
+.top nav a.on-orange::after { background: var(--ink); }

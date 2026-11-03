@@ -15,6 +15,40 @@
     addEventListener("resize", function () { if (innerWidth > 900) setMenu(false); });
   }
 
+  // Nav hover dots are orange; the ones that sit over the orange sphere turn white so they still show.
+  var navLinks = document.querySelectorAll(".top nav a");
+  function sphere() {
+    var mark = document.querySelector(".hero-mark");
+    if (mark) {
+      // Home: the globe inside the logo (viewBox 36 0 520 580, sphere centre 305,306, radius 230).
+      var m = mark.getBoundingClientRect(), s = m.width / 520;
+      return { x: m.left + (305 - 36) * s, y: m.top + 306 * s, r: 230 * s };
+    }
+    var hero = document.querySelector(".page-hero");
+    if (!hero) return null;
+    var cs = getComputedStyle(hero, "::after");
+    if (cs.position !== "absolute") return null;
+    var h = hero.getBoundingClientRect(), w = parseFloat(cs.width);
+    var shift = new DOMMatrix(cs.transform === "none" ? undefined : cs.transform).m42;
+    var left = cs.left !== "auto" ? parseFloat(cs.left) : h.width - parseFloat(cs.right) - w;
+    return { x: h.left + left + w / 2, y: h.top + parseFloat(cs.top) + shift + w / 2, r: w / 2 };
+  }
+  function markDots() {
+    var c = sphere();
+    navLinks.forEach(function (a) {
+      var r = a.getBoundingClientRect();
+      var over = !!c && r.width > 0 && Math.hypot(r.left + r.width / 2 - c.x, r.bottom + 13 - c.y) < c.r;
+      a.classList.toggle("on-orange", over);
+    });
+  }
+  if (navLinks.length) {
+    markDots();
+    addEventListener("resize", markDots);
+    addEventListener("load", markDots);
+    // The sphere and logo drift into place on load; measure again once they've settled.
+    setTimeout(markDots, 1500);
+  }
+
   // Entrances: each part rises once as its section enters. Content is visible without script.
   var parts = document.querySelectorAll(".rise, .shutter");
   if ("IntersectionObserver" in window) {
