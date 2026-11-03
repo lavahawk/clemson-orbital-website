@@ -403,3 +403,40 @@ img, video, svg { display: block; max-width: 100%; }
 /* Photo slots in the folders: a figure, with a small caption on pictures that are not the team's own. */
 figure.folder-media { margin: 0; position: relative; }
 .folder-media figcaption { position: absolute; right: 12px; bottom: 12px; max-width: calc(100% - 24px); padding: 4px 10px; border-radius: 999px; background: rgb(10 11 15 / 0.72); color: var(--ink); font-size: 13px; line-height: 1.4; }
+
+/* Livelier hover and press. Hover motion only on pointers that can hover; the reduced-motion rule above switches all of it off.
+   --spring overshoots a little, so small moves settle with a bounce instead of stopping flat. */
+:root { --spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+.btn { transition: transform 0.3s var(--spring), background-color 0.2s, box-shadow 0.3s var(--ease); -webkit-tap-highlight-color: transparent; }
+.btn::before { transition: transform 0.45s var(--spring); }
+.btn:not(:disabled):active { transform: scale(0.96); transition-duration: 0.15s; transition-timing-function: ease-out; }
+.top nav a { transition: color 0.2s, translate 0.3s var(--spring); }
+.top nav a::after { transition: transform 0.4s var(--spring), opacity 0.2s; }
+.brand img { transition: transform 0.6s var(--spring); }
+.folder .more::before { transition: transform 0.4s var(--spring); }
+.folder .more { transition: gap 0.3s var(--spring); }
+.folder-media img { transition: scale 0.8s var(--ease); }
+.tab { transition: translate 0.35s var(--spring); }
+.tab::before { transition: transform 0.45s var(--spring); }
+.stage-name { transition: opacity 0.2s, color 0.2s; }
+.leader-photo { transition: transform 0.5s var(--spring), box-shadow 0.3s var(--ease); }
+.leader-body h3 { transition: color 0.2s; }
+.foot-cols a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: color 0.2s, background-size 0.35s var(--ease); }
+
+@media (hover: hover) {
+  .btn:not(:disabled):hover { transform: translateY(-3px); box-shadow: 0 10px 24px -10px rgb(245 102 0 / 0.65); }
+  .btn.on-accent:not(:disabled):hover { box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.6); }
+  .btn:not(:disabled):hover::before { transform: scale(0.55) translateX(6px); }
+  .btn:not(:disabled):active { transform: scale(0.96); box-shadow: none; }
+  .top nav a:hover { translate: 0 -2px; }
+  .brand:hover img { transform: rotate(-24deg) scale(1.08); }
+  .folder .more:hover { gap: 16px; }
+  .folder .more:hover::before { transform: scale(1.6); }
+  .folder:hover .folder-media img { scale: 1.05; }
+  .folder:hover .tab { translate: 0 -4px; }
+  .folder:hover .tab::before { transform: scale(0.7); }
+  .stage[aria-expanded="false"]:hover .stage-name { color: var(--accent); }
+  .leader:hover .leader-photo { transform: scale(1.06) rotate(-3deg); box-shadow: 0 0 0 4px var(--accent); }
+  .leader:hover .leader-body h3 { color: var(--accent); }
+  .foot-cols a:hover { background-size: 100% 1px; }
+}
