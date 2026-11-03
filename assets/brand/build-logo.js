@@ -121,6 +121,18 @@ function stage(n) {
   const cuts = shown.flatMap((p, i) => p.cut.map((d) => `<path d="${d}" fill="#000"${isNew(i) ? ` class="cut-in"${cutDelay(i)}` : ""}/>`)).join("");
   const lines = shown.map((p, i) => p.lines ? `<g${isNew(i) ? ' class="draw-in"' : ""}>${p.lines.map((pts) => `<path d="${open(pts)}" pathLength="1"${isNew(i) ? delay(i) : ""}/>`).join("")}</g>` : "").join("");
   const hasShip = n >= 4;
+  // Team: the ship flies in along the middle swoop (line D, tip to neck), leading that line as it draws, and turns with the curve.
+  // animateMotion places the group at each point and rotates it to the tangent; the inner transform undoes the final
+  // position and heading, so the ship lands exactly where the logo draws it.
+  const flight = LINES.D, end = flight[flight.length - 1], prev = flight[flight.length - 2];
+  const endAngle = (Math.atan2(end[1] - prev[1], end[0] - prev[0]) * 180) / Math.PI;
+  const shipArt = `<path d="${CONNECTOR}" fill="${ink}"/><path d="${SHIP_BODY}" fill="${ink}" stroke="${ink}" stroke-width="${STROKE}" stroke-linejoin="round"/>`;
+  const flyingShip = `<g class="ship-fly" opacity="0">
+    <set attributeName="opacity" to="1" begin="0.75s" fill="freeze"/>
+    <animateMotion path="${open(flight)}" begin="0.75s" dur="1.6s" fill="freeze" rotate="auto" calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines="0.16 1 0.3 1"/>
+    <g transform="rotate(${r(-endAngle)}) translate(${r(-end[0])} ${r(-end[1])})">${shipArt}</g>
+  </g>
+  <g class="ship-still">${shipArt}</g>`;
   const finished = n >= 5;
   const fill = finished ? "url(#st-globe)" : ORANGE;
   const shade = GLOBE_SHADE.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join("");
@@ -134,7 +146,11 @@ function stage(n) {
     @keyframes draw { 0% { opacity: 0; } 2% { opacity: 1; } 100% { opacity: 1; stroke-dashoffset: 0; } }
     @keyframes show { to { opacity: 1; } }
     @keyframes fly { to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) { .draw-in path, .cut-in, .ship-in, .done-in { animation: none; stroke-dashoffset: 0; opacity: 1; transform: none; } }
+    .ship-still { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .draw-in path, .cut-in, .ship-in, .done-in { animation: none; stroke-dashoffset: 0; opacity: 1; transform: none; }
+      .ship-fly { display: none; } .ship-still { display: inline; }
+    }
   </style>
   <defs>
     <linearGradient id="st-globe" x1="0.18" y1="0.08" x2="0.82" y2="0.96">${shade}</linearGradient>
@@ -146,7 +162,7 @@ function stage(n) {
     <circle class="done-in" cx="${SPHERE.cx}" cy="${SPHERE.cy}" r="${SPHERE.r}" fill="none" stroke="${ink}" stroke-width="${STROKE}"/>` : ""}
   </g>
   <g fill="none" stroke="${ink}" stroke-width="${STROKE}" stroke-linecap="round" stroke-linejoin="round">${lines}</g>${hasShip ? `
-  <g${n === 4 ? ' class="ship-in"' : ""}><path d="${CONNECTOR}" fill="${ink}"/><path d="${SHIP_BODY}" fill="${ink}" stroke="${ink}" stroke-width="${STROKE}" stroke-linejoin="round"/></g>` : ""}
+  ${n === 4 ? flyingShip : `<g>${shipArt}</g>`}` : ""}
 </svg>
 `;
 }

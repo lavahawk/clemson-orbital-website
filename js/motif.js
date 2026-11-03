@@ -66,7 +66,8 @@
     orbit();
   }
 
-  // Background stars: now and then one fades in somewhere, twinkles and goes out; about one in six is a shooting star.
+  // Background stars: every couple of seconds one fades in somewhere, twinkles and goes out; about one in six is a shooting star.
+  // Each star has a depth, and scrolling slides nearer stars faster than far ones (parallax).
   // Skipped for reduced motion, and paused while the tab is hidden.
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "animate" in Element.prototype) {
     var sky = document.createElement("div");
@@ -74,12 +75,19 @@
     sky.setAttribute("aria-hidden", "true");
     document.body.appendChild(sky);
     var live = 0;
+    var skyTick = false;
+    var skyScroll = function () { skyTick = false; sky.style.setProperty("--sy", (-scrollY).toFixed(1) + "px"); };
+    addEventListener("scroll", function () { if (!skyTick) { skyTick = true; requestAnimationFrame(skyScroll); } }, { passive: true });
+    skyScroll();
     var spawn = function () {
-      if (!document.hidden && live < 10) {
+      if (!document.hidden && live < 18) {
         var star = document.createElement("i");
         var shooting = Math.random() < 1 / 6;
+        var depth = 0.04 + Math.random() * 0.26;
+        star.style.setProperty("--z", depth.toFixed(3));
         star.style.left = Math.random() * 100 + "vw";
-        star.style.top = Math.random() * (shooting ? 50 : 100) + "vh";
+        // Offset by the parallax shift already applied, so the star appears where it was placed.
+        star.style.top = "calc(" + (Math.random() * (shooting ? 50 : 100)).toFixed(2) + "vh + " + (scrollY * depth).toFixed(1) + "px)";
         live++;
         var anim;
         if (shooting) {
@@ -104,9 +112,9 @@
         sky.appendChild(star);
         anim.onfinish = function () { star.remove(); live--; };
       }
-      setTimeout(spawn, 1800 + Math.random() * 4200);
+      setTimeout(spawn, 1000 + Math.random() * 2000);
     };
-    setTimeout(spawn, 1200);
+    setTimeout(spawn, 600);
   }
 
   // Entrances: each part rises once as its section enters. Content is visible without script.
