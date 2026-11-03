@@ -20,7 +20,7 @@ const PAGES = [
 
 // The header's logo lockup is the one from the current build: Archivo wordmark, IBM Plex Mono sub-label.
 // Bumped whenever motif.css or motif.js changes, so browsers drop their cached copy.
-const VERSION = "6";
+const VERSION = "7";
 
 const BRAND_FONTS =`<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -346,7 +346,7 @@ ${split("every discipline has a seat", [
       "New members join a project already underway and learn it next to someone a semester ahead. If you have an idea for a new project, we'll help you find the people to start it.",
     ], `
         <a class="btn" href="contact.html#message">join the team</a>`)}`,
-  scripts: [`${UP}data/leadership.js`, `${UP}js/leadership.js`],
+  scripts: [`${UP}data/leadership.js`, `${UP}data/leadership-links.js`, `${UP}js/leadership.js?v=${VERSION}`],
 }));
 
 write("contact.html", page({

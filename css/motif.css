@@ -440,3 +440,14 @@ figure.folder-media { margin: 0; position: relative; }
   .leader:hover .leader-body h3 { color: var(--accent); }
   .foot-cols a:hover { background-size: 100% 1px; }
 }
+
+/* Leader contact links: always shown on touch screens; slide in under the name on hover or keyboard focus elsewhere. */
+.leader-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.leader-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px 0 10px; border-radius: 999px; background: var(--ground-2); color: var(--ink); font-size: 15px; font-weight: 700; text-decoration: none; transition: background-color 0.2s, color 0.2s, scale 0.3s var(--spring); }
+.leader-links svg { width: 16px; height: 16px; flex: none; }
+.leader-links a:not(:disabled):active { scale: 0.96; }
+@media (hover: hover) {
+  .leader-links { opacity: 0; translate: 0 -8px; transition: opacity 0.25s ease-out, translate 0.4s var(--spring); }
+  .leader:hover .leader-links, .leader:focus-within .leader-links { opacity: 1; translate: 0 0; }
+  .leader-links a:hover { background: var(--accent); color: var(--accent-ink); scale: 1.05; }
+}
