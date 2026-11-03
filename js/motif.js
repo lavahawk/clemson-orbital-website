@@ -50,6 +50,22 @@
     setTimeout(markDots, 1500);
   }
 
+  // Scroll orbit: while the hero scrolls away, its sphere drifts along a small arc and turns a few degrees.
+  var orbitHero = document.querySelector(".page-hero, .hero");
+  if (orbitHero && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var orbitTick = false;
+    var orbit = function () {
+      orbitTick = false;
+      var p = Math.min(1, Math.max(0, scrollY / Math.max(1, orbitHero.offsetHeight)));
+      var a = p * Math.PI * 0.6; // part of a lap: down and around to the right
+      orbitHero.style.setProperty("--ox", (Math.sin(a) * 36).toFixed(1) + "px");
+      orbitHero.style.setProperty("--oy", ((1 - Math.cos(a)) * 48).toFixed(1) + "px");
+      orbitHero.style.setProperty("--rot", (p * 14).toFixed(2) + "deg");
+    };
+    addEventListener("scroll", function () { if (!orbitTick) { orbitTick = true; requestAnimationFrame(orbit); } }, { passive: true });
+    orbit();
+  }
+
   // Background stars: now and then one fades in somewhere, twinkles and goes out; about one in six is a shooting star.
   // Skipped for reduced motion, and paused while the tab is hidden.
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "animate" in Element.prototype) {

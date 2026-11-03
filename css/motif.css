@@ -483,3 +483,8 @@ figure.folder-media { margin: 0; position: relative; }
 .sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 .sky i { position: absolute; border-radius: 50%; background: var(--ink); opacity: 0; box-shadow: 0 0 6px 1px rgb(241 241 239 / 0.45); }
 .sky i.shoot { width: 90px; height: 1.5px; border-radius: 1px; background: linear-gradient(90deg, rgb(241 241 239 / 0), var(--ink)); box-shadow: none; transform-origin: left center; }
+
+/* Scroll orbit (motif.js sets --ox, --oy, --rot from scroll position). Uses translate/rotate, so it adds to the entrance animations' transform. */
+.page-hero::after { translate: var(--ox, 0px) var(--oy, 0px); rotate: var(--rot, 0deg); }
+.hero-mark { translate: var(--ox, 0px) var(--oy, 0px); rotate: var(--rot, 0deg); }
+@media (min-width: 901px) { .page-hero::after { translate: var(--ox, 0px) calc(-50% + var(--oy, 0px)); } }
