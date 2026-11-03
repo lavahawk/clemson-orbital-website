@@ -1,17 +1,18 @@
 /*
   Contact form handling.
 
-  Messages go to cubesat@clemson.edu.
+  Messages go to cubesat@clemson.edu through FormSubmit (formsubmit.co), which emails each
+  submission to that inbox. No account: the first submission sends an activation link to
+  cubesat@clemson.edu, and messages are delivered once someone clicks it.
 
-  - If `endpoint` is set (a form service such as Formspree or a small backend
-    that forwards to cubesat@clemson.edu), the form POSTs there as JSON.
-  - If `endpoint` is empty, the form opens the visitor's email app with the
-    message filled in, addressed to cubesat@clemson.edu. Nothing is stored.
+  - If the service fails or isn't activated yet, the form falls back to opening the
+    visitor's email app with the message filled in, so nothing is lost.
+  - If `endpoint` is emptied, the form always uses the email app.
 */
 (function () {
   var CONFIG = {
     recipient: "cubesat@clemson.edu",
-    endpoint: "" // e.g. "https://formspree.io/f/your-form-id"
+    endpoint: "https://formsubmit.co/ajax/cubesat@clemson.edu"
   };
 
   var form = document.getElementById("contact-form");
@@ -86,19 +87,27 @@
       body: JSON.stringify({
         name: values.name,
         email: values.email,
-        affiliation: values.affiliation,
+        affiliation: values.affiliation || "(none)",
         topic: values.topic,
         message: values.message,
-        _to: CONFIG.recipient
+        _subject: "[Clemson Orbital] " + values.topic + " from " + values.name,
+        _template: "table",
+        _captcha: "false"
       })
     })
       .then(function (response) {
-        if (!response.ok) throw new Error("Request failed");
+        return response.json().catch(function () { return {}; }).then(function (data) {
+          // FormSubmit answers 200 with success "false" when the inbox hasn't activated the form yet.
+          if (!response.ok || String(data.success) !== "true") throw new Error(data.message || "Request failed");
+        });
+      })
+      .then(function () {
         form.reset();
         setStatus("Thanks, your message is on its way to the team.", "ok");
       })
       .catch(function () {
-        setStatus("Something went wrong. Please email " + CONFIG.recipient + " directly.", "error");
+        openMailClient(values);
+        setStatus("We couldn't send it from the site, so we opened your email app instead. If nothing opens, write to " + CONFIG.recipient + ".", "error");
       })
       .finally(function () {
         submit.disabled = false;

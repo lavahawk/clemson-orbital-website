@@ -20,7 +20,7 @@ const PAGES = [
 
 // The header's logo lockup is the one from the current build: Archivo wordmark, IBM Plex Mono sub-label.
 // Bumped whenever motif.css or motif.js changes, so browsers drop their cached copy.
-const VERSION = "18";
+const VERSION = "19";
 
 const BRAND_FONTS =`<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -358,7 +358,7 @@ write("contact.html", page({
   description: "Send a message to the Clemson Orbital team at cubesat@clemson.edu about joining, sponsorship, X-PLORE, or outreach.",
   hero: { h1: "write to clemson orbital.", lead: "Joining, sponsorship, X-PLORE or a school visit: one inbox reaches the whole team. Looking for a specific person? Our leadership is on the team page." },
   body: `${coupon}`,
-  scripts: [`${UP}js/contact.js`],
+  scripts: [`${UP}js/contact.js?v=${VERSION}`],
 }));
 
 /* ---------------- Home: same header and footer, links to the new pages ---------------- */
