@@ -1,0 +1,237 @@
+{
+  "meta": {
+    "url": "https://space.uah.edu",
+    "title": "Space Hardware Club",
+    "description": "",
+    "language": "en",
+    "viewport": "width=device-width,initial-scale=1",
+    "themeColor": null,
+    "ogImage": null,
+    "ogTitle": "Space Hardware Club",
+    "ogDescription": ""
+  },
+  "theme": {
+    "mode": "light",
+    "bodyBackground": "#ffffff",
+    "isDark": false,
+    "confidence": 0.9
+  },
+  "brand": {
+    "name": "Space Hardware Club",
+    "favicon": {
+      "href": "https://space.uah.edu/assets/logos/logo.png",
+      "type": null
+    }
+  },
+  "colors": {
+    "dominant": [
+      {
+        "hex": "#ffffff",
+        "ratio": 0.797
+      },
+      {
+        "hex": "#000000",
+        "ratio": 0.203
+      }
+    ],
+    "palette": [
+      {
+        "hex": "#ffffff",
+        "role": "background",
+        "source": "computed"
+      },
+      {
+        "hex": "#ffffff",
+        "role": "foreground",
+        "source": "computed"
+      }
+    ],
+    "cssVariables": {
+      "--tw-ring-offset-color": "#fff",
+      "--tw-gradient-from": "#000000",
+      "--color-white": "#fff",
+      "--tw-gradient-to": "#000000",
+      "--tw-gradient-via": "#000000",
+      "--color-black": "#000"
+    },
+    "gradients": []
+  },
+  "logo": {
+    "status": "unconfirmed",
+    "reason": "All candidates are sub-program badges (Autosat, BalloonSat, Rocketry) or incomplete icon fragments, none matching the full circular 'Space Hardware Club' seal with rocket and ring shown in the header.",
+    "best": null,
+    "candidates": [
+      {
+        "selector": "img.w-8",
+        "href": "https://space.uah.edu/assets/logos/logo.png",
+        "type": "png",
+        "width": 1600,
+        "height": 1600,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party",
+        "headerScoped": true
+      },
+      {
+        "selector": "img.mb-0",
+        "href": "https://space.uah.edu/assets/logos/logo.png",
+        "type": "png",
+        "width": 1600,
+        "height": 1600,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "img.w-full",
+        "href": "https://space.uah.edu/assets/logos/AutoSatLogo.png",
+        "type": "png",
+        "width": 1280,
+        "height": 1280,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "img.w-full",
+        "href": "https://space.uah.edu/assets/logos/BalloonSat_Logo.png",
+        "type": "png",
+        "width": 3019,
+        "height": 2959,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "img.w-full",
+        "href": "https://space.uah.edu/assets/logos/RocketryLogo.png",
+        "type": "png",
+        "width": 312,
+        "height": 302,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party"
+      }
+    ]
+  },
+  "fonts": {
+    "computed": [
+      {
+        "family": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", \"Noto Sans\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "weights": [
+          "400",
+          "700",
+          "600"
+        ],
+        "source": "system"
+      }
+    ],
+    "baseSizePx": 16
+  },
+  "confidence": {
+    "colorExtraction": 0.9,
+    "logoDetection": 0.2,
+    "fontDetection": 0.8
+  },
+  "screenshot": {
+    "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/034b6651-1d9d-4adb-9584-d5861848658f/screenshot.png",
+    "width": 1920,
+    "height": 1080,
+    "sizeBytes": 1397559,
+    "uploadedAt": "2026-11-02T21:29:43.147Z"
+  },
+  "assets": {
+    "fa6d3f5e-b85f-4421-8bdd-6f720f7fa638": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/034b6651-1d9d-4adb-9584-d5861848658f/assets/fa6d3f5e-b85f-4421-8bdd-6f720f7fa638.png",
+      "name": "BalloonSat_Logo.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "941.27 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 963865,
+        "uploadedAt": "2026-11-02T21:29:43.776Z"
+      }
+    },
+    "1d65d2ce-1bb8-450d-9d12-388beb5d7b7c": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/034b6651-1d9d-4adb-9584-d5861848658f/assets/1d65d2ce-1bb8-450d-9d12-388beb5d7b7c.png",
+      "name": "OutreachLogo.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "328.48 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 336367,
+        "uploadedAt": "2026-11-02T21:29:43.526Z"
+      }
+    },
+    "f20ba9a6-24e6-417d-9a31-c4e782c74ac0": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/034b6651-1d9d-4adb-9584-d5861848658f/assets/f20ba9a6-24e6-417d-9a31-c4e782c74ac0.png",
+      "name": "AutoSatLogo.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "148.46 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 152025,
+        "uploadedAt": "2026-11-02T21:29:43.672Z"
+      }
+    },
+    "41f993d9-1bd8-4d9c-bd6a-fd1d6605c984": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/034b6651-1d9d-4adb-9584-d5861848658f/assets/41f993d9-1bd8-4d9c-bd6a-fd1d6605c984.png",
+      "name": "RocketryLogo.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "46.57 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 47684,
+        "uploadedAt": "2026-11-02T21:29:43.366Z"
+      }
+    },
+    "1dbe0b75-3b5e-461b-8141-4fccf2fabfb5": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/034b6651-1d9d-4adb-9584-d5861848658f/assets/1dbe0b75-3b5e-461b-8141-4fccf2fabfb5.png",
+      "name": "SpaceFlightLogo.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "305.37 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 312703,
+        "uploadedAt": "2026-11-02T21:29:43.462Z"
+      }
+    },
+    "5cd91ff3-036c-4576-a3ea-868abca5a97e": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/034b6651-1d9d-4adb-9584-d5861848658f/assets/5cd91ff3-036c-4576-a3ea-868abca5a97e.png",
+      "name": "logo.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "216.56 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 221759,
+        "uploadedAt": "2026-11-02T21:29:44.112Z"
+      }
+    }
+  }
+}

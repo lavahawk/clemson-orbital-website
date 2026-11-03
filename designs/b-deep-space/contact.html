@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | Clemson Orbital</title>
+  <meta name="description" content="Meet the Clemson Orbital leadership team and send a message to cubesat@clemson.edu about joining, payloads, sponsorship, or outreach.">
+  <meta name="theme-color" content="#03050C">
+  <link rel="icon" href="../../assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200;300;400;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="space.css">
+  <link rel="stylesheet" href="../../css/intro.css">
+  <script src="../../js/intro.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html"><img src="../../assets/logo.svg" alt="" width="30" height="30" data-logo-target>Clemson Orbital</a>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="missions.html">Missions</a></li>
+          <li><a href="research.html">Research</a></li>
+          <li><a href="advocacy.html">Advocacy</a></li>
+          <li><a href="contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-secondary header-cta" href="contact.html#message">Get in touch</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><svg class="icon icon-open" aria-hidden="true"><use href="../../assets/icons/sprite.svg#i-menu"></use></svg><svg class="icon icon-close" aria-hidden="true"><use href="../../assets/icons/sprite.svg#i-x"></use></svg></button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="sky"></div>
+      <div class="planet" aria-hidden="true"></div>
+      <div class="ring" aria-hidden="true"></div>
+      <div class="wrap">
+        <span class="chapter-tag">06 / 06<i></i>Contact</span>
+        <h1>Talk to the people running Clemson Orbital.</h1>
+        <p class="lead">Our leadership team covers missions, research partnerships, outreach, and membership. Find the right person below, or use the form to reach all of us.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="numeral" aria-hidden="true">01</span>
+          <div>
+            <span class="eyebrow">Leadership</span>
+            <h2>Leadership</h2>
+            <p>General questions go to everyone through the form below.</p>
+          </div>
+        </div>
+        <div class="leaders reveal" id="leaders" data-headshot-dir="../../assets/headshots/" aria-live="polite">
+          <noscript><p>Leadership profiles need JavaScript to load. Email <a href="mailto:cubesat@clemson.edu">cubesat@clemson.edu</a> to reach the team.</p></noscript>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="message">
+      <div class="wrap contact-grid">
+          <div class="contact-intro reveal">
+            <span class="eyebrow">Form</span>
+            <h2>Send us a message</h2>
+            <p>Students asking how to join, professors with a payload idea, companies thinking about sponsorship, schools that want a visit: it all lands with the same team at <a href="mailto:cubesat@clemson.edu">cubesat@clemson.edu</a>.</p>
+            <ul class="notes">
+              <li><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#i-mail"></use></svg><span>We usually reply within a week during the semester.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#i-flask-conical"></use></svg><span>Payload proposals get a safety, power, and mass review.</span></li>
+              <li><svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#i-map-pin"></use></svg><span>Clemson, South Carolina &middot; 34.68° N, 82.84° W</span></li>
+            </ul>
+          </div>
+          <div class="form-card reveal">
+            <form class="form" id="contact-form" novalidate>
+              <div class="field"><label for="name">Name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+              <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+              <div class="field full"><label for="affiliation">Affiliation <span class="optional">(optional)</span></label><input id="affiliation" name="affiliation" type="text" placeholder="Student, department, company, school"></div>
+              <div class="field full"><label for="topic">What's this about?</label>
+                <select id="topic" name="topic" required>
+                  <option value="">Choose one</option>
+                  <option>Joining the team</option>
+                  <option>Proposing a payload or research project</option>
+                  <option>Sponsorship or partnership</option>
+                  <option>Outreach or a school visit</option>
+                  <option>Media or general question</option>
+                </select>
+              </div>
+              <div class="field full"><label for="message-body">Message</label><textarea id="message-body" name="message" required placeholder="A few sentences is plenty. Tell us what you'd like to happen next."></textarea></div>
+              <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+              <div class="form-actions full">
+                <button class="btn btn-primary" type="submit">Send message <svg class="icon" aria-hidden="true"><use href="../../assets/icons/sprite.svg#i-send"></use></svg></button>
+                <p class="form-status" id="form-status" role="status"></p>
+              </div>
+            </form>
+          </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <a class="brand" href="index.html"><img src="../../assets/logo.svg" alt="" width="34" height="34" data-logo-target>Clemson Orbital</a>
+          <p>Clemson, South Carolina<br><a href="mailto:cubesat@clemson.edu">cubesat@clemson.edu</a></p>
+        </div>
+        <div>
+          <h2>Explore</h2>
+          <ul><li><a href="about.html">About</a></li><li><a href="missions.html">Missions</a></li><li><a href="research.html">Research</a></li></ul>
+        </div>
+        <div>
+          <h2>Connect</h2>
+          <ul><li><a href="advocacy.html">Advocacy</a></li><li><a href="contact.html">Contact</a></li><li><a href="contact.html#message">Get in touch</a></li></ul>
+        </div>
+      </div>
+      <div class="base"><span>&copy; 2026 Clemson Orbital</span><span>Grew out of Clemson CubeSat.</span></div>
+    </div>
+  </footer>
+  <script src="../../data/leadership.js"></script>
+  <script src="../../js/leadership.js"></script>
+  <script src="../../js/contact.js"></script>
+  <script src="../../js/site.js"></script>
+  <script>
+    (function () {
+      var header = document.getElementById("site-header");
+      var update = function () { header.classList.toggle("solid", window.scrollY > 40); };
+      addEventListener("scroll", update, { passive: true });
+      update();
+    })();
+  </script>
+</body>
+</html>

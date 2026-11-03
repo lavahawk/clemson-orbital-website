@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "/": {
+      "targetKind": "existing-ui",
+      "projectId": "481ec078-80ee-4224-b901-34ac7a6a6f87",
+      "baselineDraftId": "611270b9-3469-49a0-968b-940787fe2e8e",
+      "activeDraftId": "9368c22d-3989-4922-9408-71728e3e7027",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [
+        "assets-logo.svg",
+        "f487e2eb-b57d-448a-8426-d837db79babb",
+        "8f1bc44c-297e-4881-be72-c6f5d60468d0"
+      ],
+      "brandAssets": {
+        "logo": {
+          "assetKey": "assets-logo.svg",
+          "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/projects/481ec078-80ee-4224-b901-34ac7a6a6f87/brand-assets/assets-logo.svg/logo.svg",
+          "sourcePath": "assets/logo.svg"
+        }
+      },
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        ".superdesign/copy.md",
+        "index.html",
+        "css/styles.css"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "fb016ebe16e257f9f307e7adafd635f3fb706fa3aa6f5fbaad3221607c071dcc",
+        ".superdesign/copy.md": "7a459313b20c6f05eb3c84d9e255f48d6c0ee25c6d269d1a33223ce1364a0cca",
+        "index.html": "a1236341bb6eaadea9bdca5a4d97c9ef07de164df441c3c2800bd3df839b24f4",
+        "css/styles.css": "67f9fdb614c25e804adce5de6d17d18b2f5046a2e938bf0ec351399d33809191"
+      },
+      "components": [],
+      "drafts": {
+        "611270b9-3469-49a0-968b-940787fe2e8e": {
+          "title": "Current Home (baseline reproduction)",
+          "visualDirection": "original dark navy site"
+        },
+        "2f4f62d5-0b84-4b45-a75c-9b33c55d1c78": {
+          "title": "Mission Dossier Redesign",
+          "visualDirection": "A: asymmetric dossier hero, giant Archivo headline, orbital diagram, ruled card sheet",
+          "parentDraftId": "611270b9-3469-49a0-968b-940787fe2e8e"
+        },
+        "51b91a0d-d290-4673-9fa2-409a5f808605": {
+          "title": "Institutional Clarity",
+          "visualDirection": "B: centered emblem hero, paper program cards, timeline",
+          "parentDraftId": "611270b9-3469-49a0-968b-940787fe2e8e"
+        },
+        "9368c22d-3989-4922-9408-71728e3e7027": {
+          "title": "Mission Control Redesign (BUILT)",
+          "visualDirection": "Ground-track telemetry hero over Clemson coordinates, readout strip, Dossier system below the fold",
+          "parentDraftId": "2f4f62d5-0b84-4b45-a75c-9b33c55d1c78"
+        },
+        "d59101f1-6f31-4c78-ab0c-46d69968d09d": {
+          "title": "Daylight Flight Manual",
+          "visualDirection": "Paper background, ink type, orange accents",
+          "parentDraftId": "2f4f62d5-0b84-4b45-a75c-9b33c55d1c78"
+        },
+        "905e837f-9fa4-48b1-8233-69468d854d6f": {
+          "title": "Clemson Night",
+          "visualDirection": "Regalia purple dominant, orange accents",
+          "parentDraftId": "2f4f62d5-0b84-4b45-a75c-9b33c55d1c78"
+        },
+        "864c7cfc-ed08-4bea-829c-99933b1d5845": {
+          "title": "Swiss Index",
+          "visualDirection": "Type-only uppercase hero, numbered index list",
+          "parentDraftId": "2f4f62d5-0b84-4b45-a75c-9b33c55d1c78"
+        }
+      },
+      "updatedAt": "2026-11-02T21:36:26.040867+00:00"
+    }
+  }
+}

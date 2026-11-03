@@ -1,0 +1,344 @@
+{
+  "meta": {
+    "url": "https://cometsatlab.com",
+    "title": "Comets building comets | Comet Satellite Laboratory",
+    "description": "Comet Satellite Laboratory. A student-led CubeSat club bringing spacecraft engineering, flight software, and mission design to students at UT Dallas.",
+    "language": "en",
+    "viewport": "width=device-width, initial-scale=1",
+    "themeColor": "#010101",
+    "ogImage": "https://cometsatlab.com/assets/csl-logo.png",
+    "ogTitle": "Comets building comets | Comet Satellite Laboratory",
+    "ogDescription": "Comets building comets. Explore the Comet Satellite Laboratory and help build the next mission."
+  },
+  "theme": {
+    "mode": "dark",
+    "bodyBackground": "#000000",
+    "isDark": true,
+    "confidence": 0.9
+  },
+  "brand": {
+    "name": "Comet Satellite Laboratory",
+    "favicon": {
+      "href": "https://cometsatlab.com/assets/csl-logo.png",
+      "type": null
+    }
+  },
+  "colors": {
+    "dominant": [
+      {
+        "hex": "#ffffff",
+        "ratio": 0.686
+      },
+      {
+        "hex": "#000000",
+        "ratio": 0.198
+      },
+      {
+        "hex": "#a0a0a0",
+        "ratio": 0.033
+      },
+      {
+        "hex": "#ff7900",
+        "ratio": 0.03
+      },
+      {
+        "hex": "#334b3c",
+        "ratio": 0.019
+      },
+      {
+        "hex": "#595959",
+        "ratio": 0.009
+      },
+      {
+        "hex": "#cedcd1",
+        "ratio": 0.006
+      },
+      {
+        "hex": "#ff9a43",
+        "ratio": 0.006
+      },
+      {
+        "hex": "#a9b9ad",
+        "ratio": 0.005
+      },
+      {
+        "hex": "#00633c",
+        "ratio": 0.002
+      },
+      {
+        "hex": "#2e2e2e",
+        "ratio": 0.002
+      },
+      {
+        "hex": "#264735",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#163f28",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#00170e",
+        "ratio": 0.001
+      },
+      {
+        "hex": "#010101",
+        "ratio": 0
+      },
+      {
+        "hex": "#aaaaaa",
+        "ratio": 0
+      },
+      {
+        "hex": "#dce6de",
+        "ratio": 0
+      },
+      {
+        "hex": "#c8d9cb",
+        "ratio": 0
+      },
+      {
+        "hex": "#e4e9df",
+        "ratio": 0
+      }
+    ],
+    "palette": [
+      {
+        "hex": "#000000",
+        "role": "background",
+        "source": "computed"
+      },
+      {
+        "hex": "#ffffff",
+        "role": "foreground",
+        "source": "computed"
+      },
+      {
+        "hex": "#ff7900",
+        "role": "primary",
+        "source": "heuristic"
+      },
+      {
+        "hex": "#ff9a43",
+        "role": "secondary",
+        "source": "heuristic"
+      },
+      {
+        "hex": "#a0a0a0",
+        "role": "neutral",
+        "source": "heuristic"
+      }
+    ],
+    "cssVariables": {
+      "--paper": "#dce6de",
+      "--panel": "#dce6de",
+      "--muted": "#a0a0a0",
+      "--green": "#00633c",
+      "--white": "#fff",
+      "--line": "#595959",
+      "--orange": "#ff7900",
+      "--black": "#000"
+    },
+    "gradients": []
+  },
+  "logo": {
+    "status": "confirmed",
+    "reason": null,
+    "best": {
+      "selector": "img",
+      "href": "https://cometsatlab.com/assets/csl-logo.png",
+      "type": "png",
+      "width": 480,
+      "height": 480,
+      "svgContent": null,
+      "colors": [],
+      "isLight": false,
+      "isDark": false,
+      "needsDarkBackground": false,
+      "needsLightBackground": false,
+      "ownership": "first-party",
+      "headerScoped": true,
+      "variant": "color",
+      "brandNameOnLogo": "CSL",
+      "uploadedUrl": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/1ea96aa8-36e4-4438-9124-ab3d5cdc912d/assets/15253c17-7b11-48d2-99bf-69b5e150932b.png"
+    },
+    "candidates": [
+      {
+        "selector": "img",
+        "href": "https://cometsatlab.com/assets/csl-logo.png",
+        "type": "png",
+        "width": 480,
+        "height": 480,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party",
+        "headerScoped": true
+      },
+      {
+        "selector": "img.hero-logo",
+        "href": "https://cometsatlab.com/assets/SW.JPG",
+        "type": "jpg",
+        "width": 1253,
+        "height": 911,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "img",
+        "href": "https://cometsatlab.com/assets/csl-logo.png",
+        "type": "png",
+        "width": 480,
+        "height": 480,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "img",
+        "href": "https://cometsatlab.com/assets/csl-logo.png",
+        "type": "png",
+        "width": 480,
+        "height": 480,
+        "svgContent": null,
+        "colors": [],
+        "isLight": false,
+        "isDark": false,
+        "needsDarkBackground": false,
+        "needsLightBackground": false,
+        "ownership": "first-party"
+      },
+      {
+        "selector": "svg.lucide",
+        "href": null,
+        "type": "svg",
+        "width": 16,
+        "height": 16,
+        "svgContent": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-plus\" aria-hidden=\"true\"><path d=\"M5 12h14\"></path><path d=\"M12 5v14\"></path></svg>",
+        "colors": [
+          "#ffffff"
+        ],
+        "isLight": true,
+        "isDark": false,
+        "needsDarkBackground": true,
+        "needsLightBackground": false,
+        "ownership": "first-party",
+        "headerScoped": true
+      }
+    ]
+  },
+  "fonts": {
+    "computed": [
+      {
+        "family": "\"Inter Tight\", Helvetica, Arial, sans-serif",
+        "weights": [
+          "400",
+          "500",
+          "700"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "\"Inter Tight\", Arial, sans-serif",
+        "weights": [
+          "400"
+        ],
+        "source": "web"
+      },
+      {
+        "family": "\"IBM Plex Mono\", monospace",
+        "weights": [
+          "400"
+        ],
+        "source": "web"
+      }
+    ],
+    "baseSizePx": 16
+  },
+  "confidence": {
+    "colorExtraction": 0.9,
+    "logoDetection": 0.95,
+    "fontDetection": 0.8
+  },
+  "screenshot": {
+    "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/1ea96aa8-36e4-4438-9124-ab3d5cdc912d/screenshot.png",
+    "width": 1920,
+    "height": 1080,
+    "sizeBytes": 375641,
+    "uploadedAt": "2026-11-02T21:30:44.679Z"
+  },
+  "assets": {
+    "15253c17-7b11-48d2-99bf-69b5e150932b": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/1ea96aa8-36e4-4438-9124-ab3d5cdc912d/assets/15253c17-7b11-48d2-99bf-69b5e150932b.png",
+      "name": "csl-logo.png",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "40.77 KB",
+        "mimeType": "image/png",
+        "sizeBytes": 41745,
+        "uploadedAt": "2026-11-02T21:30:44.928Z"
+      }
+    },
+    "fddd1195-5268-4ccd-b780-cc17a51ebd66": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/1ea96aa8-36e4-4438-9124-ab3d5cdc912d/assets/fddd1195-5268-4ccd-b780-cc17a51ebd66.jpg",
+      "name": "SW.JPG",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "118.99 KB",
+        "mimeType": "image/jpeg",
+        "sizeBytes": 121846,
+        "uploadedAt": "2026-11-02T21:30:45.224Z"
+      }
+    },
+    "91a8b5b8-e50f-4179-880c-26785a1d2cae": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/1ea96aa8-36e4-4438-9124-ab3d5cdc912d/assets/91a8b5b8-e50f-4179-880c-26785a1d2cae.svg",
+      "name": "balloon.svg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "1.69 KB",
+        "mimeType": "image/svg+xml",
+        "sizeBytes": 1728,
+        "uploadedAt": "2026-11-02T21:30:44.936Z"
+      }
+    },
+    "043cbfe5-fd5c-496f-b34a-1607b7cc64d2": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/1ea96aa8-36e4-4438-9124-ab3d5cdc912d/assets/043cbfe5-fd5c-496f-b34a-1607b7cc64d2.svg",
+      "name": "workshops.svg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "2.35 KB",
+        "mimeType": "image/svg+xml",
+        "sizeBytes": 2410,
+        "uploadedAt": "2026-11-02T21:30:44.950Z"
+      }
+    },
+    "8753054d-b0f0-4255-b81c-d193bfecc9bd": {
+      "url": "https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/brand/1ea96aa8-36e4-4438-9124-ab3d5cdc912d/assets/8753054d-b0f0-4255-b81c-d193bfecc9bd.svg",
+      "name": "orbital-card.svg",
+      "type": "image",
+      "description": "",
+      "metadata": {
+        "size": "2.87 KB",
+        "mimeType": "image/svg+xml",
+        "sizeBytes": 2941,
+        "uploadedAt": "2026-11-02T21:30:44.883Z"
+      }
+    }
+  }
+}

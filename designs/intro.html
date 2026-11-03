@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logo Intro | Clemson Orbital</title>
+  <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/intro.css">
+  <script src="../js/intro.js" data-no-autoplay></script>
+  <style>
+    :root { --bg: #050608; --text: #f1f1ef; --dim: #9b9ca6; --line: #24262c; --accent: #f56600; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; background: var(--bg); color: var(--text); font: 16px/1.5 "Inter", system-ui, sans-serif; display: grid; grid-template-rows: auto 1fr auto; }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 18px; text-decoration: none; color: inherit; }
+    .brand img { width: 40px; height: 44px; }
+    header nav { display: flex; gap: 24px; color: var(--dim); font-size: 15px; }
+    main { display: grid; place-items: center; text-align: center; padding: 48px 24px; }
+    .hero-logo { display: block; width: min(36vmin, 300px); height: auto; margin: 0 auto 28px; }
+    h1 { margin: 0 0 12px; font-size: clamp(28px, 4vw, 44px); letter-spacing: -0.02em; font-weight: 600; text-wrap: balance; }
+    main p { margin: 0 auto 32px; max-width: 46ch; color: var(--dim); text-wrap: pretty; }
+    .controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; }
+    button { font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; transition-property: background-color, color, scale; transition-duration: 150ms; transition-timing-function: ease-out; }
+    button:active { scale: 0.96; }
+    button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .play { min-height: 48px; padding: 0 24px; border: 0; border-radius: 999px; background: var(--accent); color: #111; font-weight: 600; }
+    .speeds { display: flex; padding: 4px; border-radius: 999px; background: #15161a; }
+    .speeds button { min-height: 40px; padding: 0 16px; border: 0; border-radius: 999px; background: transparent; color: var(--dim); }
+    .speeds button[aria-pressed="true"] { background: #2a2c33; color: var(--text); }
+    @media (hover: hover) { .play:hover { background: #ff7a1a; } .speeds button:hover { color: var(--text); } }
+    .fills { margin-top: 16px; }
+    .fills-label { color: var(--dim); font-size: 14px; }
+    footer { padding: 16px 24px; color: var(--dim); font-size: 14px; text-align: center; }
+    footer a { color: var(--text); }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html"><img src="../assets/logo.svg" alt="" width="40" height="44">Clemson Orbital</a>
+    <nav aria-label="Example navigation"><span>Missions</span><span>Research</span><span>Contact</span></nav>
+  </header>
+  <main>
+    <div>
+      <img class="hero-logo" src="../assets/logo.svg" alt="Clemson Orbital logo" width="520" height="580" data-logo-target>
+      <h1>The logo intro</h1>
+      <p>The ship passes behind the globe, curls round its left edge and draws the swoops from its tail, with a short orange trail that fades behind it. The orange fill ripples out from where the ship lands, and the finished mark settles here as the page's main logo.</p>
+      <div class="controls">
+        <button class="play" type="button" id="replay">Replay intro</button>
+        <div class="speeds" role="group" aria-label="Playback speed">
+          <button type="button" data-speed="1" aria-pressed="true">Normal</button>
+          <button type="button" data-speed="0.5" aria-pressed="false">Half speed</button>
+          <button type="button" data-speed="0.25" aria-pressed="false">Quarter speed</button>
+        </div>
+      </div>
+      <div class="controls fills">
+        <span class="fills-label" id="fills-label">Sphere fill</span>
+        <div class="speeds" role="group" aria-labelledby="fills-label">
+          <button type="button" data-fill="ripple" aria-pressed="true">Ripple</button>
+          <button type="button" data-fill="wake" aria-pressed="false">Wake</button>
+          <button type="button" data-fill="swirl" aria-pressed="false">Swirl</button>
+          <button type="button" data-fill="rings" aria-pressed="false">Orbit rings</button>
+        </div>
+      </div>    </div>
+  </main>
+  <footer>Click anywhere or press Esc to skip while it plays. <a href="index.html">Back to the design canvas</a></footer>
+  <script>
+    var speed = 1, fill = new URLSearchParams(location.search).get("introFill") || "ripple", playing = false;
+    var replay = document.getElementById("replay");
+    function go() {
+      if (playing) return;
+      playing = true;
+      window.CoIntro.play({ speed: speed, fill: fill, onDone: function () { playing = false; replay.focus({ preventScroll: true }); } });
+    }
+    replay.addEventListener("click", go);
+    function group(attr, set) {
+      var buttons = document.querySelectorAll("[data-" + attr + "]");
+      buttons.forEach(function (b) {
+        b.addEventListener("click", function () {
+          set(b.getAttribute("data-" + attr));
+          buttons.forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        });
+      });
+    }
+    group("speed", function (v) { speed = parseFloat(v); });
+    // Choosing a fill plays it straight away.
+    group("fill", function (v) { fill = v; go(); });
+    document.querySelectorAll("[data-fill]").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.fill === fill)); });
+    // Play once on arrival.
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", go); else go();
+  </script>
+</body>
+</html>

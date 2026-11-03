@@ -1,0 +1,48 @@
+/* Logo intro: the ship swoops over the sphere, the sphere becomes a globe, the mark flies into the nav. */
+
+.co-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  background: var(--intro-bg, #050608);
+  color: var(--intro-ink, #f4f2ee);
+  cursor: pointer;
+}
+.co-intro-mark {
+  width: min(56vmin, 440px);
+  height: auto;
+  overflow: visible;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.co-intro-skip {
+  position: absolute;
+  right: 24px;
+  bottom: 22px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(244, 242, 238, 0.1);
+  color: inherit;
+  font: 500 14px/1 system-ui, sans-serif;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition-property: background-color, scale;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+.co-intro-skip:focus-visible { background: rgba(244, 242, 238, 0.2); outline: 2px solid currentColor; outline-offset: 2px; }
+.co-intro-skip:active { scale: 0.96; }
+@media (hover: hover) {
+  .co-intro-skip:hover { background: rgba(244, 242, 238, 0.2); }
+}
+
+/* While the intro runs the page waits underneath, then fades up as the mark flies into the nav.
+   The nav logo stays hidden until its stand-in lands, so there is never two of it. */
+html.co-intro-running { background: var(--intro-bg, #050608); }
+html.co-intro-running body { overflow: hidden; }
+html.co-intro-running body > :not(.co-intro) { opacity: 0; transition: opacity 0.6s ease; }
+html.co-intro-running.co-intro-reveal body > :not(.co-intro) { opacity: 1; }
+html.co-intro-running [data-logo-target] { visibility: hidden; }

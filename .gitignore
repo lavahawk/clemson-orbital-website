@@ -1,0 +1,13 @@
+.superdesign/tmp/
+.superdesign-extract-*.log
+.taste-skill/
+.claude/
+
+# Full-size originals stay local; the site uses the web copies in assets/photos and assets/headshots/web.
+assets/headshots/*.png
+assets/headshots/*.jpg
+assets/headshots/Edited/
+assets/headshots/Edited.zip
+assets/Team Presenting Professionally.jpg
+assets/Greenville X-PLORE Tabling Event/
+assets/Research/

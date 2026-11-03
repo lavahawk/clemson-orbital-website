@@ -1,0 +1,32 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+body{margin:0;background:#222;color:#ddd;font:12px monospace}
+.stage{position:relative;width:585px;height:615px;display:inline-block;margin:10px}
+.stage img,.stage svg{position:absolute;inset:0;width:585px;height:615px}
+</style></head><body>
+<div class="stage"><img src="founding-sketch.png" alt=""><svg id="over" viewBox="0 0 585 615"></svg></div>
+<div class="stage" style="background:#0b0c10"><img src="../logo.svg" alt=""></div>
+<div class="stage" style="background:#0b0c10"><img src="logo-sketch-style.svg" alt=""></div>
+<div class="stage" style="background:#f2efe9;width:200px;height:200px"><img src="logo-on-light.svg" alt="" style="width:200px;height:200px"></div>
+<div class="stage" style="background:#0b0c10;width:48px;height:48px"><img src="../logo.svg" alt="" style="width:48px;height:48px"></div>
+<script>
+fetch("logo-paths.json").then((r) => r.json()).then((p) => {
+  const over = document.getElementById("over");
+  over.innerHTML = [...p.lines, ...p.shipOutline].map((d) => `<path d="${d}" fill="none" stroke="red" stroke-width="3" opacity="0.8"/>`).join("") +
+    `<circle cx="${p.sphere.cx}" cy="${p.sphere.cy}" r="${p.sphere.r}" fill="none" stroke="blue" stroke-width="2" opacity="0.6"/>`;
+});
+// Scan the sketch: for each column/row, list where the dark ink runs are.
+window.scan = function () {
+  const img = document.querySelector(".stage img");
+  const c = document.createElement("canvas"); c.width = 585; c.height = 615;
+  const x = c.getContext("2d"); x.drawImage(img, 0, 0);
+  const d = x.getImageData(0, 0, 585, 615).data;
+  const dark = (px, py) => d[(py * 585 + px) * 4] < 110;
+  const runs = (get, n) => { const out = []; let s = -1; for (let i = 0; i < n; i++) { const k = get(i); if (k && s < 0) s = i; if (!k && s >= 0) { out.push(Math.round((s + i - 1) / 2)); s = -1; } } return out; };
+  const cols = {}, rows = {};
+  for (let px = 40; px <= 560; px += 20) cols[px] = runs((py) => dark(px, py), 615);
+  for (let py = 0; py <= 600; py += 20) rows[py] = runs((px) => dark(px, py), 585);
+  return { cols, rows };
+};
+</script>
+</body></html>

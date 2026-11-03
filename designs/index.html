@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design Canvas | Clemson Orbital</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1a1b1f;
+      --dot: #2c2e34;
+      --chrome: #232429;
+      --chrome-2: #2b2d33;
+      --line: #36383f;
+      --text: #ececf0;
+      --dim: #9b9ca6;
+      --accent: #f56600;
+      --sel: #4d8dff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: "Inter", system-ui, sans-serif; font-size: 13px; }
+    button { font: inherit; color: inherit; }
+
+    /* Top bar */
+    .bar { position: fixed; inset: 0 0 auto 0; height: 52px; z-index: 30; display: flex; align-items: center; gap: 12px; padding: 0 12px 0 16px; background: var(--chrome); border-bottom: 1px solid var(--line); }
+    .title { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; white-space: nowrap; }
+    .title img { width: 22px; height: 22px; }
+    .title span { color: var(--dim); font-weight: 400; }
+    .spacer { flex: 1; }
+    .seg { display: flex; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 2px; }
+    .seg button { border: 0; background: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: var(--dim); }
+    .seg button[aria-pressed="true"] { background: var(--chrome-2); color: var(--text); box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset; }
+    .tool { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; height: 32px; padding: 0 10px; border: 1px solid var(--line); background: var(--chrome-2); border-radius: 8px; cursor: pointer; }
+    .tool:hover { border-color: #4a4c55; }
+    .zoom-label { min-width: 52px; text-align: center; color: var(--dim); font-variant-numeric: tabular-nums; }
+
+    /* Layers panel */
+    .panel { position: fixed; top: 52px; left: 0; bottom: 0; width: 240px; z-index: 20; background: var(--chrome); border-right: 1px solid var(--line); padding: 14px 10px; overflow-y: auto; }
+    .panel h2 { margin: 4px 8px 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--dim); }
+    .layer { display: flex; flex-direction: column; gap: 2px; width: 100%; text-align: left; border: 1px solid transparent; background: none; padding: 9px 10px; border-radius: 8px; cursor: pointer; }
+    .layer:hover { background: var(--chrome-2); }
+    .layer.is-active { background: rgba(77,141,255,0.12); border-color: rgba(77,141,255,0.4); }
+    .layer b { font-weight: 600; }
+    .layer small { color: var(--dim); line-height: 1.4; }
+    .layer .swatches { display: flex; gap: 4px; margin-top: 6px; }
+    .layer .swatches i { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15); }
+    .help { margin: 18px 8px 0; padding-top: 14px; border-top: 1px solid var(--line); color: var(--dim); line-height: 1.7; }
+    .help kbd { display: inline-block; min-width: 18px; padding: 0 5px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; background: var(--chrome-2); color: var(--text); font: 11px/16px "Inter", sans-serif; text-align: center; }
+
+    /* Canvas */
+    .viewport { position: fixed; top: 52px; left: 240px; right: 0; bottom: 0; overflow: hidden; cursor: grab;
+      background-color: var(--bg);
+      background-image: radial-gradient(var(--dot) 1px, transparent 1px); }
+    .viewport.panning { cursor: grabbing; }
+    .world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+
+    .frame { position: absolute; }
+    .frame-label { position: absolute; left: 0; bottom: 100%; display: flex; align-items: center; gap: 10px; padding-bottom: 10px; white-space: nowrap; transform-origin: 0 100%; }
+    .frame-label b { font-size: 15px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    .frame-label span { color: var(--dim); flex: none; }
+    .frame-label a, .frame-label button { flex: none; }
+    .frame-label a, .frame-label button { color: var(--dim); text-decoration: none; border: 1px solid var(--line); background: var(--chrome); border-radius: 6px; padding: 3px 8px; cursor: pointer; }
+    .frame-label a:hover, .frame-label button:hover { color: var(--text); }
+    .screen { position: relative; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 30px 80px -30px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06); transition: box-shadow 0.15s; }
+    .frame.is-active .screen { box-shadow: 0 30px 80px -30px rgba(0,0,0,0.7), 0 0 0 2px var(--sel); }
+    .frame.is-live .screen { box-shadow: 0 30px 80px -30px rgba(0,0,0,0.7), 0 0 0 3px var(--accent); }
+    .screen iframe { display: block; border: 0; width: 100%; height: 100%; background: #fff; }
+    /* Shield stops iframes from eating pan/zoom gestures until you double-click into one. */
+    .shield { position: absolute; inset: 0; cursor: default; }
+    .frame.is-live .shield { display: none; }
+    .live-hint { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 40; padding: 10px 16px; border-radius: 999px; background: var(--accent); color: #111; font-weight: 600; display: none; }
+    body.live .live-hint { display: block; }
+
+    .loading { position: absolute; inset: 0; display: grid; place-items: center; color: #888; background: #f4f4f4; font-size: 28px; }
+
+    .seg.pages { overflow-x: auto; max-width: 52vw; scrollbar-width: none; }
+    .seg.pages button { white-space: nowrap; }
+
+    @media (max-width: 760px) {
+      .panel { display: none; }
+      .viewport { left: 0; }
+      .title span, .hide-sm { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="title"><img src="../assets/logo.svg" alt="">Clemson Orbital <span>/ design canvas</span></div>
+    <div class="spacer"></div>
+    <div class="seg pages" role="group" aria-label="Page">
+      <button type="button" data-page="index.html" aria-pressed="true">Home</button>
+      <button type="button" data-page="about.html" aria-pressed="false">About</button>
+      <button type="button" data-page="missions.html" aria-pressed="false">Missions</button>
+      <button type="button" data-page="research.html" aria-pressed="false">Research</button>
+      <button type="button" data-page="advocacy.html" aria-pressed="false">Advocacy</button>
+      <button type="button" data-page="contact.html" aria-pressed="false">Contact</button>
+      <button type="button" data-page="all" aria-pressed="false">All pages</button>
+    </div>
+    <div class="seg" role="group" aria-label="Device">
+      <button type="button" data-device="desktop" aria-pressed="true">Desktop</button>
+      <button type="button" data-device="mobile" aria-pressed="false">Mobile</button>
+      <button type="button" data-device="both" aria-pressed="false">Both</button>
+    </div>
+    <button class="tool" type="button" id="zoom-out" aria-label="Zoom out">&minus;</button>
+    <span class="zoom-label" id="zoom-label">100%</span>
+    <button class="tool" type="button" id="zoom-in" aria-label="Zoom in">+</button>
+    <button class="tool hide-sm" type="button" id="fit">Fit all</button>
+  </header>
+
+  <aside class="panel">
+    <h2>Designs</h2>
+    <div id="layers"></div>
+    <div class="help">
+      <div><kbd>Drag</kbd> or scroll to pan</div>
+      <div><kbd>Ctrl</kbd> + scroll to zoom</div>
+      <div><kbd>1</kbd>&ndash;<kbd>5</kbd> jump to a design</div>
+      <div><kbd>F</kbd> fit all &middot; <kbd>0</kbd> 100%</div>
+      <div>Double-click a frame to scroll and click inside it. <kbd>Esc</kbd> to leave.</div>
+    </div>
+  </aside>
+
+  <div class="viewport" id="viewport">
+    <div class="world" id="world"></div>
+  </div>
+  <div class="live-hint">Interacting with page &middot; press Esc to return to the canvas</div>
+
+  <script>
+    // Add a design here and it appears on the canvas.
+    var PAGES = [
+      ["index.html", "Home"], ["about.html", "About"], ["missions.html", "Missions"],
+      ["research.html", "Research"], ["advocacy.html", "Advocacy"], ["contact.html", "Contact"]
+    ];
+    var allPages = function (dir) {
+      var map = {};
+      PAGES.forEach(function (p) { map[p[0]] = dir + p[0]; });
+      return map;
+    };
+    var DESIGNS = [
+      { id: "a", name: "A. Campus Daylight", note: "Warm cream, serif headlines, orange and purple color blocks, photo collage. All six pages.", pages: allPages("a-daylight/"), colors: ["#fbf7f1", "#f56600", "#522d80", "#1f1a24"] },
+      { id: "b", name: "B. Deep Space", note: "Cinematic Earth-horizon hero, light wide type, numbered chapters. All six pages.", pages: allPages("b-deep-space/"), colors: ["#03050c", "#0c1430", "#7fb2ff", "#f56600"] },
+      { id: "d", name: "D. One Motif (live site)", note: "The live design, served from the site root. The logo's sphere runs everything: a giant cropped hero mark, round crops, stacked folders, a payload fit check.", pages: allPages("../"), colors: ["#0a0b0f", "#f56600", "#26272f", "#f1f1ef"] },
+      { id: "e", name: "E. Type Only", note: "Dark. A full-width statement, the work as a list, the process on a paper slip, one orange word as the button. Home page.", pages: { "index.html": "e-type/index.html" }, colors: ["#0b0b0d", "#f1f1ef", "#f56600", "#ecebe8"] },
+      { id: "now", name: "Mission Control (old build)", note: "The previous site, archived in designs/mission-control for comparison.", pages: allPages("mission-control/"), colors: ["#07080b", "#f56600", "#2a1a45", "#eee9e1"] }
+    ];
+    var SIZES = { desktop: { w: 1440, h: 900 }, mobile: { w: 390, h: 844 } };
+    var GAP = 160, ROW_GAP = 120;
+
+    var viewport = document.getElementById("viewport");
+    var world = document.getElementById("world");
+    var layers = document.getElementById("layers");
+    var zoomLabel = document.getElementById("zoom-label");
+
+    var state = { x: 80, y: 120, z: 0.3, device: "desktop", page: "index.html", active: null };
+    var frames = [];
+
+    function apply() {
+      world.style.transform = "translate(" + state.x + "px," + state.y + "px) scale(" + state.z + ")";
+      zoomLabel.textContent = Math.round(state.z * 100) + "%";
+      // Keep frame labels readable at any zoom.
+      var inv = 1 / state.z;
+      // Each label is as wide on screen as its frame, so neighbors never overlap.
+      frames.forEach(function (f) {
+        f.label.style.width = (SIZES[f.device].w * state.z) + "px";
+        f.label.style.transform = "scale(" + inv + ")";
+      });
+      var dot = 24 * state.z;
+      viewport.style.backgroundSize = dot + "px " + dot + "px";
+      viewport.style.backgroundPosition = state.x + "px " + state.y + "px";
+    }
+
+    function pageName(page) {
+      for (var i = 0; i < PAGES.length; i++) if (PAGES[i][0] === page) return PAGES[i][1];
+      return page;
+    }
+
+    function makeFrame(design, page, device) {
+      var size = SIZES[device];
+      var src = design.pages[page];
+      var el = document.createElement("div");
+      el.className = "frame";
+      el.style.width = size.w + "px";
+
+      var label = document.createElement("div");
+      label.className = "frame-label";
+      label.innerHTML = "<b></b><span></span><a target=\"_blank\" rel=\"noopener\">Open</a>";
+      label.querySelector("b").textContent = state.page === "all"
+        ? pageName(page) + " · " + design.name
+        : design.name + " · " + pageName(page);
+      label.querySelector("span").textContent = device === "desktop" ? "1440" : "390";
+      // "Open" plays the logo intro (it never runs inside these frames).
+      label.querySelector("a").href = src + (src.indexOf("?") < 0 ? "?intro=1" : "&intro=1");
+
+      var screen = document.createElement("div");
+      screen.className = "screen";
+      screen.style.width = size.w + "px";
+      screen.style.height = size.h + "px";
+
+      var loading = document.createElement("div");
+      loading.className = "loading";
+      loading.textContent = "Loading " + design.name;
+
+      var iframe = document.createElement("iframe");
+      iframe.src = src;
+      iframe.title = design.name + " " + pageName(page) + " (" + device + ")";
+      iframe.addEventListener("load", function () {
+        loading.remove();
+        // Esc inside the page should still return to the canvas.
+        try {
+          iframe.contentWindow.addEventListener("keydown", function (e) { if (e.key === "Escape") leaveLive(); });
+        } catch (e) { /* cross-origin */ }
+        // Grow the frame to the full page height, like a canvas artboard.
+        var fit = function () {
+          try {
+            var doc = iframe.contentDocument;
+            var h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+            if (h > 0) { screen.style.height = h + "px"; layout(); }
+          } catch (e) { /* cross-origin: keep the viewport height */ }
+        };
+        fit();
+        setTimeout(fit, 800);
+        setTimeout(fit, 2500);
+      });
+
+      var shield = document.createElement("div");
+      shield.className = "shield";
+
+      screen.appendChild(iframe);
+      screen.appendChild(loading);
+      screen.appendChild(shield);
+      el.appendChild(label);
+      el.appendChild(screen);
+      world.appendChild(el);
+
+      var frame = { el: el, label: label, screen: screen, design: design, page: page, device: device };
+      shield.addEventListener("mousedown", function () { select(design.id, false); });
+      shield.addEventListener("dblclick", function () { goLive(frame); });
+      return frame;
+    }
+
+    function build() {
+      world.innerHTML = "";
+      frames = [];
+      var devices = state.device === "both" ? ["desktop", "mobile"] : [state.device];
+      var pages = state.page === "all" ? PAGES.map(function (p) { return p[0]; }) : [state.page];
+      DESIGNS.forEach(function (d) {
+        pages.forEach(function (page) {
+          if (!d.pages[page]) return; // this design doesn't have that page yet
+          devices.forEach(function (dev) { frames.push(makeFrame(d, page, dev)); });
+        });
+      });
+      layout();
+      apply();
+    }
+
+    // One page: designs sit side by side in a single row.
+    // All pages: one row per design, its pages running left to right.
+    // In "Both", each phone frame sits right beside its desktop frame.
+    function layout() {
+      var groups = state.page === "all"
+        ? DESIGNS.map(function (d) { return frames.filter(function (f) { return f.design.id === d.id; }); })
+        : [frames];
+      var y = 0;
+      groups.forEach(function (row) {
+        var x = 0, tallest = 0;
+        row.forEach(function (f, i) {
+          var next = row[i + 1];
+          f.el.style.left = x + "px";
+          f.el.style.top = y + "px";
+          tallest = Math.max(tallest, f.screen.offsetHeight);
+          var pairedPhone = next && next.device === "mobile" && f.device === "desktop" && next.page === f.page && next.design === f.design;
+          x += SIZES[f.device].w + (pairedPhone ? ROW_GAP : GAP);
+        });
+        if (row.length) y += tallest + 260;
+      });
+    }
+
+    function bounds(list) {
+      var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+      list.forEach(function (f) {
+        var x = parseFloat(f.el.style.left), y = parseFloat(f.el.style.top);
+        var w = f.screen.offsetWidth, h = Math.min(f.screen.offsetHeight, 2600);
+        minX = Math.min(minX, x); minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x + w); maxY = Math.max(maxY, y + h);
+      });
+      return { x: minX, y: minY, w: maxX - minX, h: maxY - minY };
+    }
+
+    function focus(list, maxZoom) {
+      if (!list.length) return;
+      var b = bounds(list);
+      var vw = viewport.clientWidth, vh = viewport.clientHeight;
+      // Fit by width: pages are tall, so show the tops of every frame and let people scroll down.
+      var z = Math.min((vw - 80) / b.w, maxZoom || 1);
+      state.z = Math.max(0.05, z);
+      state.x = (vw - b.w * state.z) / 2 - b.x * state.z;
+      state.y = 80 - b.y * state.z;
+      apply();
+    }
+
+    function select(id, jump) {
+      state.active = id;
+      frames.forEach(function (f) { f.el.classList.toggle("is-active", f.design.id === id); });
+      Array.prototype.forEach.call(layers.children, function (btn) { btn.classList.toggle("is-active", btn.dataset.id === id); });
+      if (jump) focus(frames.filter(function (f) { return f.design.id === id; }), 0.75);
+    }
+
+    var live = null;
+    function goLive(frame) {
+      leaveLive();
+      live = frame;
+      frame.el.classList.add("is-live");
+      document.body.classList.add("live");
+    }
+    function leaveLive() {
+      if (!live) return;
+      live.el.classList.remove("is-live");
+      document.body.classList.remove("live");
+      live = null;
+    }
+
+    function zoomAt(factor, cx, cy) {
+      var nz = Math.min(2, Math.max(0.05, state.z * factor));
+      var k = nz / state.z;
+      state.x = cx - (cx - state.x) * k;
+      state.y = cy - (cy - state.y) * k;
+      state.z = nz;
+      apply();
+    }
+
+    // Layers panel
+    DESIGNS.forEach(function (d, i) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "layer";
+      btn.dataset.id = d.id;
+      btn.innerHTML = "<b></b><small></small><span class=\"swatches\"></span>";
+      btn.querySelector("b").textContent = (i + 1) + "  " + d.name;
+      btn.querySelector("small").textContent = d.note;
+      d.colors.forEach(function (c) {
+        var s = document.createElement("i");
+        s.style.background = c;
+        btn.querySelector(".swatches").appendChild(s);
+      });
+      btn.addEventListener("click", function () { select(d.id, true); });
+      layers.appendChild(btn);
+    });
+
+    // Pan with drag
+    var drag = null;
+    viewport.addEventListener("mousedown", function (e) {
+      if (live || e.button !== 0) return;
+      drag = { x: e.clientX, y: e.clientY, sx: state.x, sy: state.y };
+      viewport.classList.add("panning");
+    });
+    addEventListener("mousemove", function (e) {
+      if (!drag) return;
+      state.x = drag.sx + (e.clientX - drag.x);
+      state.y = drag.sy + (e.clientY - drag.y);
+      apply();
+    });
+    addEventListener("mouseup", function () { drag = null; viewport.classList.remove("panning"); });
+
+    // Wheel: pan, or zoom with Ctrl/Cmd (also trackpad pinch)
+    viewport.addEventListener("wheel", function (e) {
+      if (live) return;
+      e.preventDefault();
+      var r = viewport.getBoundingClientRect();
+      if (e.ctrlKey || e.metaKey) {
+        zoomAt(Math.exp(-e.deltaY * 0.0022), e.clientX - r.left, e.clientY - r.top);
+      } else {
+        state.x -= e.deltaX;
+        state.y -= e.deltaY;
+        apply();
+      }
+    }, { passive: false });
+
+    // Touch: one finger pans, two fingers pinch
+    var touch = null;
+    viewport.addEventListener("touchstart", function (e) {
+      if (live) return;
+      if (e.touches.length === 1) touch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      if (e.touches.length === 2) touch = { d: Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY) };
+    }, { passive: true });
+    viewport.addEventListener("touchmove", function (e) {
+      if (!touch || live) return;
+      e.preventDefault();
+      if (e.touches.length === 1 && touch.x !== undefined) {
+        state.x += e.touches[0].clientX - touch.x;
+        state.y += e.touches[0].clientY - touch.y;
+        touch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        apply();
+      } else if (e.touches.length === 2 && touch.d) {
+        var d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+        var r = viewport.getBoundingClientRect();
+        var cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+        var cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+        zoomAt(d / touch.d, cx, cy);
+        touch = { d: d };
+      }
+    }, { passive: false });
+    viewport.addEventListener("touchend", function () { touch = null; });
+
+    // Toolbar
+    document.getElementById("zoom-in").addEventListener("click", function () { zoomAt(1.25, viewport.clientWidth / 2, viewport.clientHeight / 2); });
+    document.getElementById("zoom-out").addEventListener("click", function () { zoomAt(0.8, viewport.clientWidth / 2, viewport.clientHeight / 2); });
+    document.getElementById("fit").addEventListener("click", function () { focus(frames); });
+    function bindSeg(attr, key) {
+      document.querySelectorAll("[data-" + attr + "]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          state[key] = btn.getAttribute("data-" + attr);
+          document.querySelectorAll("[data-" + attr + "]").forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+          leaveLive();
+          build();
+          setTimeout(function () { focus(frames); }, 50);
+        });
+      });
+    }
+    bindSeg("device", "device");
+    bindSeg("page", "page");
+
+    // Keyboard
+    addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { leaveLive(); return; }
+      if (live) return;
+      if (e.key === "f" || e.key === "F") focus(frames);
+      if (e.key === "0") zoomAt(1 / state.z, viewport.clientWidth / 2, viewport.clientHeight / 2);
+      var n = parseInt(e.key, 10);
+      if (n >= 1 && n <= DESIGNS.length) select(DESIGNS[n - 1].id, true);
+    });
+    // Clicking empty canvas leaves interact mode.
+    viewport.addEventListener("mousedown", function (e) { if (live && !live.el.contains(e.target)) leaveLive(); }, true);
+
+    addEventListener("resize", apply);
+    build();
+    setTimeout(function () { focus(frames); }, 60);
+  </script>
+</body>
+</html>
