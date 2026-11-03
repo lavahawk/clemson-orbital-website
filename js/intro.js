@@ -12,7 +12,7 @@
      "rings" sweeps round in rings, outer to inner, like orbits tightening.
   4. The finished mark flies into place on the page.
 
-  Plays once per browser session. ?intro=1 forces it, ?intro=0 skips it, ?introSpeed=0.25 slows it.
+  Plays on a fresh visit or a refresh, not when arriving from another page of the site. ?intro=1 forces it, ?intro=0 skips it, ?introSpeed=0.25 slows it.
   Skipped for prefers-reduced-motion and inside the design canvas iframes.
   window.CoIntro.play({ speed, land, at }) replays it (designs/intro.html); `at` freezes one moment.
 */
@@ -470,14 +470,18 @@
   var params = new URLSearchParams(location.search);
   var forced = params.get("intro") === "1";
   var framed = window.self !== window.top;
-  var seen = false;
-  try { seen = sessionStorage.getItem("co-intro-seen") === "1"; } catch (e) {}
+  // Arriving from another page of the site (the header logo, a link, back/forward) skips it;
+  // a fresh visit or a refresh plays it.
+  var nav = (performance.getEntriesByType && performance.getEntriesByType("navigation")[0]) || {};
+  var fromSite = false;
+  try { fromSite = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch (e) {}
+  var seen = nav.type === "back_forward" || (nav.type !== "reload" && fromSite);
   if (script.hasAttribute("data-no-autoplay")) return;
   if (!forced && (params.get("intro") === "0" || reduced() || framed || seen)) return;
 
   root.classList.add("co-intro-running", "co-intro-played");
   var start = function () {
-    play({ speed: parseFloat(params.get("introSpeed")) || 1, onDone: function () { try { sessionStorage.setItem("co-intro-seen", "1"); } catch (e) {} } });
+    play({ speed: parseFloat(params.get("introSpeed")) || 1 });
   };
   if (document.body) start(); else document.addEventListener("DOMContentLoaded", start);
 })();

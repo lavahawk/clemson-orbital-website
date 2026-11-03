@@ -455,3 +455,31 @@ figure.folder-media { margin: 0; position: relative; }
 
 /* Nav hover dot over the orange sphere: white, so it stays visible (set by motif.js). */
 .top nav a.on-orange::after { background: var(--ink); }
+
+/* Inner-page hero: the logo assembles one piece per page in nav order (about = bare sphere ... contact = finished mark).
+   The box is the logo's viewBox (520 x 580); --d is the sphere's diameter, 460 of those units. */
+.page-hero::after { border-radius: 0; aspect-ratio: 520 / 580; background: center / contain no-repeat; }
+.page-hero.stage-0::after { background-image: url(../assets/brand/stages/stage-0.svg); }
+.page-hero.stage-1::after { background-image: url(../assets/brand/stages/stage-1.svg); }
+.page-hero.stage-2::after { background-image: url(../assets/brand/stages/stage-2.svg); }
+.page-hero.stage-3::after { background-image: url(../assets/brand/stages/stage-3.svg); }
+.page-hero.stage-4::after { background-image: url(../assets/brand/stages/stage-4.svg); }
+.page-hero.stage-5::after { background-image: url(../assets/brand/stages/stage-5.svg); }
+@keyframes sphere-in { from { opacity: 0; transform: translateX(6%) scale(0.94); } to { opacity: 1; transform: none; } }
+@media (min-width: 901px) {
+  .page-hero { min-height: min(100svh, 1000px); }
+  .page-hero::after {
+    --d: calc(min(100svh, 1000px) * 0.68);
+    width: calc(var(--d) * 1.1304); height: auto;
+    left: calc(var(--margin) + clamp(320px, 50vw, 860px) + 48px - var(--d) * 0.0848); right: auto;
+    top: calc(50% + 24px); bottom: auto; transform: none; translate: 0 -50%;
+  }
+}
+@media (max-width: 900px) {
+  .page-hero::after { --d: 80vw; width: calc(var(--d) * 1.1304); height: auto; margin: 32px 0 0 4vw; }
+}
+
+/* Background stars (motif.js): a fixed layer behind every section; the orange sphere and photo bands sit above it. */
+.sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.sky i { position: absolute; border-radius: 50%; background: var(--ink); opacity: 0; box-shadow: 0 0 6px 1px rgb(241 241 239 / 0.45); }
+.sky i.shoot { width: 90px; height: 1.5px; border-radius: 1px; background: linear-gradient(90deg, rgb(241 241 239 / 0), var(--ink)); box-shadow: none; transform-origin: left center; }

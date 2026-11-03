@@ -28,10 +28,11 @@
     if (!hero) return null;
     var cs = getComputedStyle(hero, "::after");
     if (cs.position !== "absolute") return null;
-    var h = hero.getBoundingClientRect(), w = parseFloat(cs.width);
-    var shift = new DOMMatrix(cs.transform === "none" ? undefined : cs.transform).m42;
+    // Inner pages: the sphere inside the hero's logo box (viewBox 520 x 580, centre 269,306 from its corner, radius 230).
+    var h = hero.getBoundingClientRect(), w = parseFloat(cs.width), bh = parseFloat(cs.height);
+    var shift = parseFloat((cs.translate || "0 0").split(" ")[1]) || 0;
     var left = cs.left !== "auto" ? parseFloat(cs.left) : h.width - parseFloat(cs.right) - w;
-    return { x: h.left + left + w / 2, y: h.top + parseFloat(cs.top) + shift + w / 2, r: w / 2 };
+    return { x: h.left + left + w * 269 / 520, y: h.top + parseFloat(cs.top) + shift + bh * 306 / 580, r: w * 230 / 520 };
   }
   function markDots() {
     var c = sphere();
@@ -47,6 +48,49 @@
     addEventListener("load", markDots);
     // The sphere and logo drift into place on load; measure again once they've settled.
     setTimeout(markDots, 1500);
+  }
+
+  // Background stars: now and then one fades in somewhere, twinkles and goes out; about one in six is a shooting star.
+  // Skipped for reduced motion, and paused while the tab is hidden.
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "animate" in Element.prototype) {
+    var sky = document.createElement("div");
+    sky.className = "sky";
+    sky.setAttribute("aria-hidden", "true");
+    document.body.appendChild(sky);
+    var live = 0;
+    var spawn = function () {
+      if (!document.hidden && live < 10) {
+        var star = document.createElement("i");
+        var shooting = Math.random() < 1 / 6;
+        star.style.left = Math.random() * 100 + "vw";
+        star.style.top = Math.random() * (shooting ? 50 : 100) + "vh";
+        live++;
+        var anim;
+        if (shooting) {
+          star.className = "shoot";
+          var dx = 180 + Math.random() * 160;
+          anim = star.animate([
+            { opacity: 0, transform: "rotate(25deg) translateX(0) scaleX(0.2)" },
+            { opacity: 1, offset: 0.2 },
+            { opacity: 0, transform: "rotate(25deg) translateX(" + dx + "px) scaleX(1)" }
+          ], { duration: 900 + Math.random() * 500, easing: "cubic-bezier(.2,0,0,1)" });
+        } else {
+          var size = 1.5 + Math.random() * 2;
+          star.style.width = star.style.height = size + "px";
+          anim = star.animate([
+            { opacity: 0, transform: "scale(0.4)" },
+            { opacity: 0.9, transform: "scale(1)", offset: 0.3 },
+            { opacity: 0.35, offset: 0.55 },
+            { opacity: 0.85, offset: 0.75 },
+            { opacity: 0, transform: "scale(0.6)" }
+          ], { duration: 3500 + Math.random() * 3000, easing: "ease-in-out" });
+        }
+        sky.appendChild(star);
+        anim.onfinish = function () { star.remove(); live--; };
+      }
+      setTimeout(spawn, 1800 + Math.random() * 4200);
+    };
+    setTimeout(spawn, 1200);
   }
 
   // Entrances: each part rises once as its section enters. Content is visible without script.

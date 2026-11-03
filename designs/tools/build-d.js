@@ -20,7 +20,7 @@ const PAGES = [
 
 // The header's logo lockup is the one from the current build: Archivo wordmark, IBM Plex Mono sub-label.
 // Bumped whenever motif.css or motif.js changes, so browsers drop their cached copy.
-const VERSION = "11";
+const VERSION = "13";
 
 const BRAND_FONTS =`<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -59,6 +59,9 @@ const footer = `<footer class="foot">
     <div class="foot-base"><span>&copy; 2026 Clemson Orbital</span><a class="btn" href="#main">back to top</a></div>
   </footer>`;
 
+// Each inner page shows the logo one step further along, in nav order (assets/brand/stages).
+const STAGES_BY_PAGE = { "about.html": 0, "missions.html": 1, "research.html": 2, "advocacy.html": 3, "team.html": 4, "contact.html": 5 };
+
 function page({ file, title, description, hero, body, scripts = [] }) {
   return `<!doctype html>
 <html lang="en">
@@ -83,7 +86,7 @@ function page({ file, title, description, hero, body, scripts = [] }) {
   ${header(file)}
 
   <main id="main">
-    <section class="page-hero">
+    <section class="page-hero stage-${STAGES_BY_PAGE[file]}">
       <div class="hero-copy">
         <h1 class="rise">${hero.h1}</h1>
         <p class="rise" style="--d:90ms">${hero.lead}</p>

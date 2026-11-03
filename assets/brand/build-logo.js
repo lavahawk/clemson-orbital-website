@@ -102,4 +102,51 @@ out("brand/logo-on-light.svg", svg(mark({ ink: "#1C1820", outlineSphere: true })
 out("brand/logo-currentcolor.svg", svg(mark({ ink: "currentColor", outlineSphere: true }))); // inline: lines follow text colour
 out("brand/logo-solid.svg", svg(mark({ ink: "#F4F2EE" })));                                // no sphere outline
 out("brand/logo-paths.json", JSON.stringify({ viewBox: VIEWBOX, sphere: SPHERE, stroke: STROKE, ...PATHS }, null, 2) + "\n");
+// Inner-page hero spheres: the logo assembles one piece per page, in nav order.
+// Stage 0 is the bare sphere; 1-3 add a feather each; 4 adds the ship; 5 is the finished mark.
+// The piece a stage adds draws itself in; earlier pieces are already there.
+const PIECES = [
+  { lines: [LINES.A, LINES.B], cut: [FEATHERS[0]] },
+  { lines: [LINES.C, LINES.D], cut: [FEATHERS[1]] },
+  { lines: [LINES.E, LINES.F], cut: [FEATHERS[2]] },
+  { ship: true, cut: [NECK] },
+];
+function stage(n) {
+  const ink = "#F1F1EF";
+  const shown = PIECES.slice(0, Math.min(n, 4));
+  const isNew = (i) => n <= 4 && i === n - 1;
+  const cuts = shown.flatMap((p, i) => p.cut.map((d) => `<path d="${d}" fill="#000"${isNew(i) ? ' class="cut-in"' : ""}/>`)).join("");
+  const lines = shown.map((p, i) => p.lines ? `<g${isNew(i) ? ' class="draw-in"' : ""}>${p.lines.map((pts) => `<path d="${open(pts)}" pathLength="1"/>`).join("")}</g>` : "").join("");
+  const hasShip = n >= 4;
+  const finished = n >= 5;
+  const fill = finished ? "url(#st-globe)" : ORANGE;
+  const shade = GLOBE_SHADE.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VIEWBOX}" aria-hidden="true">
+  <style>
+    .draw-in path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s cubic-bezier(.16,1,.3,1) .5s forwards; }
+    .cut-in { opacity: 0; animation: show .9s ease-out 1.1s forwards; }
+    .ship-in { opacity: 0; transform: translate(-40px, 30px) rotate(-8deg); transform-origin: 440px 80px; animation: fly 1.4s cubic-bezier(.16,1,.3,1) .5s forwards; }
+    .done-in { opacity: 0; animation: show 1.2s ease-out .4s forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes show { to { opacity: 1; } }
+    @keyframes fly { to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .draw-in path, .cut-in, .ship-in, .done-in { animation: none; stroke-dashoffset: 0; opacity: 1; transform: none; } }
+  </style>
+  <defs>
+    <linearGradient id="st-globe" x1="0.18" y1="0.08" x2="0.82" y2="0.96">${shade}</linearGradient>
+    <mask id="st-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="640"><rect width="640" height="640" fill="#fff"/>${cuts}</mask>
+  </defs>
+  <g mask="url(#st-cut)">
+    <circle cx="${SPHERE.cx}" cy="${SPHERE.cy}" r="${SPHERE.r}" fill="${ORANGE}"/>${finished ? `
+    <circle class="done-in" cx="${SPHERE.cx}" cy="${SPHERE.cy}" r="${SPHERE.r}" fill="${fill}"/>
+    <circle class="done-in" cx="${SPHERE.cx}" cy="${SPHERE.cy}" r="${SPHERE.r}" fill="none" stroke="${ink}" stroke-width="${STROKE}"/>` : ""}
+  </g>
+  <g fill="none" stroke="${ink}" stroke-width="${STROKE}" stroke-linecap="round" stroke-linejoin="round">${lines}</g>${hasShip ? `
+  <g${n === 4 ? ' class="ship-in"' : ""}><path d="${CONNECTOR}" fill="${ink}"/><path d="${SHIP_BODY}" fill="${ink}" stroke="${ink}" stroke-width="${STROKE}" stroke-linejoin="round"/></g>` : ""}
+</svg>
+`;
+}
+fs.mkdirSync(path.join(__dirname, "stages"), { recursive: true });
+for (let n = 0; n <= 5; n++) out(`brand/stages/stage-${n}.svg`, stage(n));
+
 console.log("logo files written");
