@@ -176,5 +176,29 @@
   "credit": "\"In a clean-room environment at Astrotech's payload processing facility in Titusville, Fla…\" by NASA, CC0, via rawpixel",
   "notes": [],
   "saved": "2026-11-03T00:17:22.584Z"
+ },
+ {
+  "file": "assets/lunabotics-robot-in-regolith-arena.jpg",
+  "media": "image",
+  "ref": "nasa:KSC-20260519-PH-JBS01_0067",
+  "title": "Lunabotics Robotic Mining Competition: the University of Utah team's prototype lunar robot performs during the finals for NASA's 2026 Lunabotics Challenge",
+  "creator": "NASA/Ben Smegelsky",
+  "creatorUrl": null,
+  "date": "2026-05-19",
+  "license": "public domain",
+  "licenseCode": "pd",
+  "licenseUrl": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+  "creditRequired": false,
+  "page": "https://images.nasa.gov/details/KSC-20260519-PH-JBS01_0067",
+  "via": "NASA Image and Video Library",
+  "image": "https://images-assets.nasa.gov/image/KSC-20260519-PH-JBS01_0067/KSC-20260519-PH-JBS01_0067~orig.jpg",
+  "width": 1600,
+  "height": 1067,
+  "bytes": 189620,
+  "credit": "\"Lunabotics Robotic Mining Competition\" by NASA/Ben Smegelsky, public domain, via NASA Image and Video Library",
+  "notes": [
+   "Resized from the 6720x4480 original to 1600px wide. Shows another university's robot, not Clemson Orbital hardware."
+  ],
+  "saved": "2026-11-09T16:45:00.000Z"
  }
 ]
